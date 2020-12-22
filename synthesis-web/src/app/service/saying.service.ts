@@ -19,7 +19,7 @@ export class HttpSayingService implements SayingService {
   sayingURL: string;
 
   constructor(public http: HttpClient, config: Config) {
-    this.sayingURL = "https://sinteze.intelektika.lt/synthesis.sayings/saying";
+    this.sayingURL = config.sayingURL;
   }
 
   saying(): Observable<string> {

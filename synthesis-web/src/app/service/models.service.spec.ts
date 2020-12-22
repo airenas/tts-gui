@@ -1,7 +1,7 @@
+import { Config } from './../config';
 import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Config } from '../config';
 import { HttpModelsService, ModelsService } from './models.service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -26,7 +26,10 @@ describe('HttpModelsService', () => {
   }));
 
   it('should load models', (done: DoneFn) => {
+    const config = new Config()
+    config.modelsURL = "/assets/models.json"
     const service: HttpModelsService = TestBed.inject(HttpModelsService);
+    service.config = config;
     service.models().subscribe(
       result => {
         expect(result.length).toBeGreaterThan(0);

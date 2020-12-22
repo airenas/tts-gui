@@ -5,10 +5,16 @@ import {environment} from '../environments/environment';
 export class Config {
     public synthesisURL: string;
     public sayingURL: string;
+    public modelsURL: string;
 
     constructor() {
         const prefix = '';
-        this.synthesisURL = prefix + environment.synthesisURL;
-        this.sayingURL = prefix + environment.sayingURL + '/saying';
+        this.init(prefix)
+    }
+
+    init(serverURL: string) {
+        this.synthesisURL = serverURL + environment.synthesisURL;
+        this.sayingURL = serverURL + environment.sayingURL + '/saying';
+        this.modelsURL = serverURL + environment.modelsURL;
     }
 }

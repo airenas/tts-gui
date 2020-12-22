@@ -2,5 +2,6 @@ export const environment = {
     production: true,
     synthesisURL: '/synthesis.service',
     sayingURL: '/synthesis.sayings',
+    modelsURL: '/synthesis.data/models.json',
     version: 'BUILD_VERSION',
 };

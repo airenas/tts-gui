@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   synthesisURL: '/synthesis.service',
-  sayingURL: '/synthesis.sayings'
+  sayingURL: '/synthesis.sayings',
+  modelsURL: '/synthesis.data/models.json',
 };
 
 /*

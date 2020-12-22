@@ -1,6 +1,7 @@
+import { Config } from './../config';
 import { ParamsProviderService } from './../service/params-provider.service';
 import { UnexpectedErrorService } from './../service/unexpected-error.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SynthesisService } from '../service/synthesis.service';
 import { SynthesisResult } from '../api/synthesis-result';
 import { ErrorService } from '../service/error.service';
@@ -16,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providers: [UnexpectedErrorService, ErrorService],
 })
 export class SynthesisComponent implements OnInit {
+  @Input() private serviceURL: string;
   sending = false;
   private textInternal: string;
   conditionChecked: boolean;
@@ -25,12 +27,15 @@ export class SynthesisComponent implements OnInit {
   audio: HTMLAudioElement
 
   constructor(
-    protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService, 
+    protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
     protected errorService: ErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
-    protected modelsService: ModelsService, protected snackBar: MatSnackBar) { }
+    protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) { }
 
   ngOnInit() {
+    if (this.serviceURL !== "") {
+      this.config.init(this.serviceURL)
+    }
     this.conditionChecked = false;
     this.errorText = '';
     if (this.params.text == null) {
@@ -114,7 +119,7 @@ export class SynthesisComponent implements OnInit {
     }
   }
 
-  get canSynthesize() : boolean {
+  get canSynthesize(): boolean {
     return !this.sending && this.text && this.text.trim() !== '' && this.model && this.conditionChecked
   }
 

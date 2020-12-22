@@ -1,3 +1,4 @@
+import { Config } from './../config';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,11 +17,13 @@ export abstract class ModelsService {
 
 @Injectable()
 export class HttpModelsService implements ModelsService {
-  constructor(public http: HttpClient) {
+  config: Config
+  constructor(public http: HttpClient, config: Config) {
+    this.config = config
   }
 
   models(): Observable<Model[]> {
-    return this.loadModels('assets/models.json');
+    return this.loadModels(this.config.modelsURL);
   }
 
   loadModels(url: string): Observable<Model[]> {
