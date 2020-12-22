@@ -1,5 +1,5 @@
-import {Injectable, Inject} from '@angular/core';
-import {environment} from '../environments/environment';
+import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class Config {
@@ -9,7 +9,7 @@ export class Config {
 
     constructor() {
         const prefix = '';
-        this.init(prefix)
+        this.init(prefix);
     }
 
     init(serverURL: string) {

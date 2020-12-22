@@ -17,14 +17,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providers: [UnexpectedErrorService, ErrorService],
 })
 export class SynthesisComponent implements OnInit {
-  @Input('service-url') serviceURL: string;
+  // tslint:disable-next-line: no-input-rename
+  @Input('service-url') serviceUrl: string;
   sending = false;
   private textInternal: string;
   conditionChecked: boolean;
   errorText: string;
   private modelVar: Model;
   models: Model[];
-  audio: HTMLAudioElement
+  audio: HTMLAudioElement;
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
@@ -34,8 +35,8 @@ export class SynthesisComponent implements OnInit {
 
   ngOnInit() {
     // console.log("ServiceURL=" + this.serviceURL)
-    if (this.serviceURL !== "") {
-      this.config.init(this.serviceURL)
+    if (this.serviceUrl !== '') {
+      this.config.init(this.serviceUrl);
     }
     this.conditionChecked = false;
     this.errorText = '';
@@ -89,7 +90,7 @@ export class SynthesisComponent implements OnInit {
       const audio = document.getElementById('player') as HTMLAudioElement;
       audio.src = 'data:audio/mp3;base64,' + result.audioAsString;
       audio.play();
-      this.audio = audio
+      this.audio = audio;
     }
   }
 
@@ -121,7 +122,7 @@ export class SynthesisComponent implements OnInit {
   }
 
   get canSynthesize(): boolean {
-    return !this.sending && this.text && this.text.trim() !== '' && this.model && this.conditionChecked
+    return !this.sending && this.text && this.text.trim() !== '' && this.model && this.conditionChecked;
   }
 
   get text(): string {

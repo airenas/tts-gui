@@ -17,9 +17,9 @@ export abstract class ModelsService {
 
 @Injectable()
 export class HttpModelsService implements ModelsService {
-  config: Config
+  config: Config;
   constructor(public http: HttpClient, config: Config) {
-    this.config = config
+    this.config = config;
   }
 
   models(): Observable<Model[]> {

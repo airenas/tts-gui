@@ -26,8 +26,8 @@ describe('HttpModelsService', () => {
   }));
 
   it('should load models', (done: DoneFn) => {
-    const config = new Config()
-    config.modelsURL = "/assets/models.json"
+    const config = new Config();
+    config.modelsURL = '/assets/models.json';
     const service: HttpModelsService = TestBed.inject(HttpModelsService);
     service.config = config;
     service.models().subscribe(
