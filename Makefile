@@ -5,14 +5,14 @@ port?=8000
 main_dir=synthesis-web
 commit_count=$(shell git rev-list --count HEAD)
 SYNTHESIS_WEB_COMPONENT_VERSION?=0.1
-version=$(SYNTHESIS_WEB_COMPONENT_VERSION)
+version=$(SYNTHESIS_WEB_COMPONENT_VERSION).$(commit_count)
 #####################################################################################
 $(dist_dir):
 	mkdir -p $(dist_dir)
 
 updateVersion: | $(dist_dir)
 	cat $(main_dir)/src/environments/environment.prod.sample \
-		| sed 's/BUILD_VERSION/$(version).$(commit_count)/g' > $(dist_dir)/environment.prod.ts
+		| sed 's/BUILD_VERSION/$(version)/g' > $(dist_dir)/environment.prod.ts
 	rsync --checksum $(dist_dir)/environment.prod.ts $(main_dir)/src/environments/environment.prod.ts	
 
 $(dist_dir)/.build: $(main_dir) $(main_dir)/src $(main_dir)/src/environments/environment.prod.ts
@@ -21,9 +21,26 @@ $(dist_dir)/.build: $(main_dir) $(main_dir)/src $(main_dir)/src/environments/env
 
 build: updateVersion $(dist_dir)/.build
 #####################################################################################
-serve-prod:
+serve-deployed:
 	docker run -p $(port):80 -v $(dist_dir)/html:/usr/share/nginx/html nginx:1.17.9
+#####################################################################################
+files=main-es5.js main-es2015.js polyfills-es5.js polyfills-es2015.js runtime-es5.js runtime-es2015.js \
+	3rdpartylicenses.txt styles.css info
+tts_files=$(patsubst %, $(dist_dir)/tts/%, $(files))
+$(dist_dir)/tts/%: $(dist_dir)/html/% | $(dist_dir)/tts
+	cp $< $@
+$(dist_dir)/tts/info: $(dist_dir)/tts | $(dist_dir)/tts
+	echo version : $(version) > $@
+	echo date    : $(shell date) >> $@
 
+pack: tts-component-$(version).tar.gz
+$(dist_dir)/tts:
+	mkdir -p $@
+tts-component-$(version).tar.gz: $(tts_files) | $(dist_dir)/tts	
+	tar -czf $@ -C $(dist_dir) tts
+
+
+#####################################################################################
 clean:
 	rm -rf $(dist_dir)
 
