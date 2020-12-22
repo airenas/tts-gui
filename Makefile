@@ -8,7 +8,7 @@ SYNTHESIS_WEB_COMPONENT_VERSION?=0.1
 version=$(SYNTHESIS_WEB_COMPONENT_VERSION).$(commit_count)
 #####################################################################################
 init: 
-	cd $(main_dir) && npm install
+	cd $(main_dir) && npm ci
 test: 
 	cd $(main_dir) && ng test
 #####################################################################################

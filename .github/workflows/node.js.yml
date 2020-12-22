@@ -34,14 +34,14 @@ jobs:
     - run: npm ci
     - run: npm run build:prod --if-present
     - run: npm run test:prod
-    - run: ls -la
-    - run: ls -la coverage
-    - run: ls -la coverage/synthesis-web
+    
+    - name: Fix lcov paths
+      run: cat ./coverage/synthesis-web/lcov.info | sed 's/SF:src/SF:synthesis-web\/src/g' > ./coverage/lcov.info
+    
     - run: npm run lint 
-
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./synthesis-web/coverage/synthesis-web/lcov.info
+        path-to-lcov: ./synthesis-web/coverage/lcov.info

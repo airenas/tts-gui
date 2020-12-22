@@ -1,5 +1,6 @@
 # tts-gui
-![Node.js CI](https://github.com/airenas/tts-gui/workflows/Node.js%20CI/badge.svg)
+
+![Node.js CI](https://github.com/airenas/tts-gui/workflows/Node.js%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/airenas/tts-gui/badge.svg)](https://coveralls.io/github/airenas/tts-gui)
 
 
 Web component for tts GUI. Tested with node >= v10.16.3, npm >= 6.14.10
