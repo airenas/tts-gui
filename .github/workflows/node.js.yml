@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Prepare env file
-      run: cd .. && make generate
+      run: cd .. && make updateVersion
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
