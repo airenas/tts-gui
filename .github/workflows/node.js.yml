@@ -34,6 +34,9 @@ jobs:
     - run: npm ci
     - run: npm run build:prod --if-present
     - run: npm run test:prod
+    - run: ls -la
+    - run: ls -la coverage
+    - run: ls -la coverage/synthesis-web
     - run: npm run lint 
 
 
