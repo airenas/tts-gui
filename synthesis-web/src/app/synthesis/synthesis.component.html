@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-content>
+    <div class="full-width">
+      <div class="text-control">
+        <mat-form-field class="full-width">
+          <textarea class="text" id="textInput" matInput mat-autosize minRows="2" placeholder="Tekstas"
+            [(ngModel)]="text"></textarea>
+        </mat-form-field>
+        <button class="next-text-button" id="nextTextButton" mat-stroked-button (click)="nextText()"
+          matTooltip="Kita patarlė">
+          <i class="material-icons">navigate_next</i>
+        </button>
+      </div>
+      <div class="controls-container">
+        <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
+        <p>Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės apsaugos įstatymų.</p>
+      </div>
+      <div class="controls-container">
+        <mat-form-field class="models-select" appearance="none">
+          <mat-label>Diktorius</mat-label>
+          <mat-select [(value)]="model">
+            <mat-option [value]="m" *ngFor="let m of models" matTooltip="{{m.description}}">{{ m.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p id="infoParagraph" *ngIf="model && model.info" class="info-model">{{model.info}}</p>
+      </div>
+
+      <div class="controls-container">
+        <button id="synthesisButton" mat-raised-button [disabled]="!canSynthesize" color="primary"
+          (click)="synthesize()">Skaityti</button>
+        <div class="result-container" *ngIf="sending">
+          <mat-progress-spinner id="synthesisSpinner" class="upload-spinner" color="primary" mode="indeterminate"
+            diameter="35">
+          </mat-progress-spinner>
+        </div>
+        <div class="result-container" id="errorDiv" *ngIf="!sending && errorText && errorText != ''">
+          <div class="error-container"><span class="error-text">{{errorText}} </span></div>
+        </div>
+        <div class="audio-container" [hidden]="sending || (errorText && errorText != '')">
+          <audio class="audio-comp" controls id="player"></audio>
+          <!-- <a mat-button id="audioDownloadButton" class="audio-button" href="{{audio.src}}" target="_blank"
+            *ngIf="audio" download="audio.mp3">
+            <i class="material-icons">cloud_download</i></a> -->
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

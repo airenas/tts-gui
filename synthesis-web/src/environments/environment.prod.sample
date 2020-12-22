@@ -1,0 +1,6 @@
+export const environment = {
+    production: true,
+    synthesisURL: '/synthesis.service',
+    sayingURL: '/synthesis.sayings',
+    version: 'BUILD_VERSION',
+};
