@@ -16,14 +16,11 @@ export abstract class SayingService {
 
 @Injectable()
 export class HttpSayingService implements SayingService {
-  sayingURL: string;
-
-  constructor(public http: HttpClient, config: Config) {
-    this.sayingURL = config.sayingURL;
+  constructor(public http: HttpClient, private config: Config) {
   }
 
   saying(): Observable<string> {
-    return this.http.get<string>(this.sayingURL, { responseType: 'text' as 'json'});
+    return this.http.get<string>(this.config.sayingURL, { responseType: 'text' as 'json'});
   }
 
   protected handleError(error: HttpErrorResponse): Observable<never> {

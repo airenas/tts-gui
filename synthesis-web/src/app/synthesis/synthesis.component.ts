@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providers: [UnexpectedErrorService, ErrorService],
 })
 export class SynthesisComponent implements OnInit {
-  @Input() private serviceURL: string;
+  @Input('service-url') serviceURL: string;
   sending = false;
   private textInternal: string;
   conditionChecked: boolean;
@@ -33,6 +33,7 @@ export class SynthesisComponent implements OnInit {
     protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) { }
 
   ngOnInit() {
+    console.log("ServiceURL=" + this.serviceURL)
     if (this.serviceURL !== "") {
       this.config.init(this.serviceURL)
     }

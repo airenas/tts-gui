@@ -44,7 +44,7 @@ import { MatSelectModule } from '@angular/material/select';
     { provide: SayingService, useClass: HttpSayingService },
     { provide: ModelsService, useClass: HttpModelsService }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [],
   entryComponents: [SynthesisComponent]
 })
 export class AppModule {

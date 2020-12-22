@@ -15,8 +15,6 @@ export abstract class SynthesisService {
 @Injectable()
 export class HttpSynthesisService implements SynthesisService {
 
-  synthesisURL: string;
-
   static handleError(error: HttpErrorResponse): Observable<SynthesisResult> {
     console.log('Handling error');
     console.error(error);
@@ -36,8 +34,7 @@ export class HttpSynthesisService implements SynthesisService {
     return throwError(error);
   }
 
-  constructor(public http: HttpClient, config: Config) {
-    this.synthesisURL = config.synthesisURL;
+  constructor(public http: HttpClient, private config: Config) {
   }
 
   synthesize(text: string, model: string): Observable<SynthesisResult> {
@@ -48,7 +45,7 @@ export class HttpSynthesisService implements SynthesisService {
         Accept: 'application/json'
       })
     };
-    return this.http.post(this.synthesisURL + model, { text }, httpOptions)
+    return this.http.post(this.config.synthesisURL + model, { text }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
