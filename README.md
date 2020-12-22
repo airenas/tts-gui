@@ -1,4 +1,6 @@
 # tts-gui
+![Node.js CI](https://github.com/airenas/tts-gui/workflows/Node.js%20CI/badge.svg)
+
 
 Web component for tts GUI. Tested with node >= v10.16.3, npm >= 6.14.10
 
