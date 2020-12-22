@@ -23,6 +23,8 @@ import { SynthesisResult } from '../api/synthesis-result';
 import { LocalStorageParamsProviderService, ParamsProviderService } from '../service/params-provider.service';
 import { ModelsService } from '../service/models.service';
 import { Model } from '../api/model';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 @Injectable()
 export class MockSynthesisService implements SynthesisService {
@@ -69,14 +71,14 @@ export class TestHelper {
     HttpClientModule,
     BrowserAnimationsModule,
     MatTabsModule, MatButtonModule, MatInputModule, FormsModule,
-    MatSnackBarModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatMenuModule, MatTooltipModule,
+    MatSnackBarModule, MatProgressBarModule, MatSelectModule,
+    MatMenuModule, MatProgressSpinnerModule, MatTooltipModule,
     MatCardModule, ReactiveFormsModule
   ],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' },
   { provide: ActivatedRoute, useClass: MockActivatedRoute },
   { provide: Config, useClass: Config },
-  { provide: ParamsProviderService, useClass: LocalStorageParamsProviderService} ,
+  { provide: ParamsProviderService, useClass: LocalStorageParamsProviderService },
   { provide: SynthesisService, useClass: MockSynthesisService },
   { provide: SayingService, useClass: MockSayingService },
   { provide: ModelsService, useClass: MockModelsService }
@@ -85,7 +87,7 @@ export class TestHelper {
   exports: [
     MatTabsModule, MatButtonModule, MatInputModule, FormsModule,
     MatSnackBarModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule, MatSelectModule, MatCheckboxModule
   ],
 })
 

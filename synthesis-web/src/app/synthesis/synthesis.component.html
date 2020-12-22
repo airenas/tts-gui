@@ -15,17 +15,17 @@
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
         <p>Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės apsaugos įstatymų.</p>
       </div>
-      <div class="controls-container">
+      <!-- <div class="controls-container">
         <mat-form-field class="models-select" appearance="none">
           <mat-label>Diktorius</mat-label>
-          <mat-select [(value)]="model">
+          <mat-select [(value)]="model" id="modelSelect">
             <mat-option [value]="m" *ngFor="let m of models" matTooltip="{{m.description}}">{{ m.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <p id="infoParagraph" *ngIf="model && model.info" class="info-model">{{model.info}}</p>
-      </div>
+      </div> -->
 
       <div class="controls-container">
         <button id="synthesisButton" mat-raised-button [disabled]="!canSynthesize" color="primary"

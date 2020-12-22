@@ -44,6 +44,7 @@ describe('SynthesisComponent', () => {
   it('should have enabled button on valid Input', waitForAsync(() => {
     expect(fixture.debugElement.query(By.css('#synthesisButton')).nativeElement.disabled).toBe(true);
     component.text = 'olia';
+    component.conditionChecked = true;
     component.model = { id: 'id', name: 'name', url: '/url' };
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -58,6 +59,7 @@ describe('SynthesisComponent', () => {
   it('should invoke synthesis on click', waitForAsync(() => {
     component.text = 'olia';
     component.model = { id: 'id', name: 'name', url: '/url' };
+    component.conditionChecked = true;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       spyOn(component, 'synthesize');
@@ -83,23 +85,23 @@ describe('SynthesisComponent', () => {
     });
   }));
 
-  it('should show info paragraph', waitForAsync(() => {
-    component.model = { id: 'id', name: 'olia', url: '/url', info: 'olialia' };
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const p = fixture.debugElement.query(By.css('#infoParagraph'));
-      expect(p.nativeElement.textContent).toEqual('olialia');
-      expect(TestHelper.Visible(p)).toBe(true);
-    });
-  }));
+  // it('should show info paragraph', waitForAsync(() => {
+  //   component.model = { id: 'id', name: 'olia', url: '/url', info: 'olialia' };
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //     const p = fixture.debugElement.query(By.css('#infoParagraph'));
+  //     expect(p.nativeElement.textContent).toEqual('olialia');
+  //     expect(TestHelper.Visible(p)).toBe(true);
+  //   });
+  // }));
 
-  it('should hide info paragraph', waitForAsync(() => {
-    component.model = { id: 'id', name: 'olia', url: '/url' };
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#infoParagraph')))).toBe(false);
-    });
-  }));
+  // it('should hide info paragraph', waitForAsync(() => {
+  //   component.model = { id: 'id', name: 'olia', url: '/url' };
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#infoParagraph')))).toBe(false);
+  //   });
+  // }));
 
   it('should show spinner', waitForAsync(() => {
     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisSpinner')))).toBe(false);
@@ -110,55 +112,6 @@ describe('SynthesisComponent', () => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDiv')))).toBe(false);
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(false);
       expect(fixture.debugElement.query(By.css('#synthesisButton')).nativeElement.disabled).toBe(true);
-    });
-  }));
-
-  it('should be visible model button', waitForAsync(() => {
-    const button = fixture.debugElement.query(By.css('#modelMenuButton'));
-    const span = fixture.debugElement.query(By.css('#modelSpan'));
-    expect(TestHelper.Visible(button)).toBe(true);
-    expect(TestHelper.Visible(span)).toBe(true);
-  }));
-
-  it('should change model name', waitForAsync(() => {
-    const span = fixture.debugElement.query(By.css('#modelSpan'));
-    expect(TestHelper.Visible(span)).toBe(true);
-    component.model = { id: 'id', name: 'olia', url: '/url' };
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(span.nativeElement.innerHTML).toEqual('olia');
-    });
-  }));
-
-  it('should open model menu', waitForAsync(() => {
-    const button = fixture.debugElement.query(By.css('#modelMenuButton'));
-    component.models = [{ id: 'id', name: 'olia', url: '/url' }];
-    fixture.detectChanges();
-    let modelButton = fixture.debugElement.query(By.css('#modelButton-id'));
-    expect(TestHelper.Visible(modelButton)).toBe(false);
-    button.nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      modelButton = fixture.debugElement.query(By.css('#modelButton-id'));
-      expect(TestHelper.Visible(modelButton)).toBe(true);
-    });
-  }));
-
-  it('should select model menu', waitForAsync(() => {
-    const button = fixture.debugElement.query(By.css('#modelMenuButton'));
-    component.models = [{ id: 'id', name: 'olia1', url: '/url' }];
-    fixture.detectChanges();
-    button.nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const modelButton = fixture.debugElement.query(By.css('#modelButton-id'));
-      expect(TestHelper.Visible(modelButton)).toBe(true);
-      modelButton.nativeElement.click();
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        const span = fixture.debugElement.query(By.css('#modelSpan'));
-        expect(span.nativeElement.innerHTML).toEqual('olia1');
-      });
     });
   }));
 });
