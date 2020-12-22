@@ -1,1 +1,3 @@
 synthesis-web/src/environments/environment.prod.ts
+Makefile.options
+deploy/**
