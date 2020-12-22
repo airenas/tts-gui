@@ -7,6 +7,11 @@ commit_count=$(shell git rev-list --count HEAD)
 SYNTHESIS_WEB_COMPONENT_VERSION?=0.1
 version=$(SYNTHESIS_WEB_COMPONENT_VERSION).$(commit_count)
 #####################################################################################
+init: 
+	cd $(main_dir) && npm install
+test: 
+	cd $(main_dir) && ng test
+#####################################################################################
 $(dist_dir):
 	mkdir -p $(dist_dir)
 
@@ -36,7 +41,7 @@ $(dist_dir)/tts/info: $(dist_dir)/tts | $(dist_dir)/tts
 pack: tts-component-$(version).tar.gz
 $(dist_dir)/tts:
 	mkdir -p $@
-tts-component-$(version).tar.gz: $(tts_files) | $(dist_dir)/tts	
+tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/tts	
 	tar -czf $@ -C $(dist_dir) tts
 
 
