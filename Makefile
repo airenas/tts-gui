@@ -36,7 +36,7 @@ $(dist_dir)/tts/%: $(dist_dir)/html/% | $(dist_dir)/tts
 	cp $< $@
 $(dist_dir)/tts/info: $(dist_dir)/tts | $(dist_dir)/tts
 	echo version : $(version) > $@
-	echo date    : $(shell date) >> $@
+	echo date    : $(shell date --rfc-3339=seconds) >> $@
 
 pack: tts-component-$(version).tar.gz
 $(dist_dir)/tts:
