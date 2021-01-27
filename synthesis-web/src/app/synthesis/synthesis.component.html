@@ -28,8 +28,8 @@
       </div> -->
 
       <div class="controls-container">
-        <button id="synthesisButton" mat-raised-button [disabled]="!canSynthesize" color="primary"
-          (click)="synthesize()">Skaityti</button>
+        <button class="synthesis-button" id="synthesisButton" mat-raised-button [disabled]="!canSynthesize"
+          color="primary" (click)="synthesize()">Skaityti</button>
         <div class="result-container" *ngIf="sending">
           <mat-progress-spinner id="synthesisSpinner" class="upload-spinner" color="primary" mode="indeterminate"
             diameter="35">
@@ -38,11 +38,15 @@
         <div class="result-container" id="errorDiv" *ngIf="!sending && errorText && errorText != ''">
           <div class="error-container"><span class="error-text">{{errorText}} </span></div>
         </div>
-        <div class="audio-container" [hidden]="sending || (errorText && errorText != '')">
-          <audio class="audio-comp" controls id="player"></audio>
-          <!-- <a mat-button id="audioDownloadButton" class="audio-button" href="{{audio.src}}" target="_blank"
-            *ngIf="audio" download="audio.mp3">
-            <i class="material-icons">cloud_download</i></a> -->
+        <div class="audio-container" [style.display]="(sending || (errorText && errorText !== '')) ? 'none' : 'flex'">
+          <div class="audio-comp-div">
+            <audio class="audio-comp" controls id="player"></audio>
+          </div>
+          <div *ngIf="isFirefox" class="download-button-div">
+            <a mat-button *ngIf="audio" id="audioDownloadButton" class="download-button" href="{{audio.src}}" target="_blank"
+              download="download.mp3">
+              <i class="material-icons">cloud_download</i></a>
+          </div>
         </div>
       </div>
     </div>

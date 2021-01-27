@@ -1,20 +1,20 @@
 const PROXY_CONFIG = {
-  "/synthesis.service/dnn-sabina-01": {
+  "/synthesis.service/": {
     //"target": "http://localhost:7050/",
-    "target": "http://list.airenas.eu:6080/",
+    "target": "https://sinteze.intelektika.lt/",
     "secure": false,
     // "pathRewrite": {"^/synthesis.service": ""},
     "logLevel": "debug"
   },
-  "/synthesis.service/": {
+  "/synthesis.data/": {
     //"target": "http://localhost:7050/",
-    "target": "http://localhost:8201/",
+    "target": "https://sinteze.intelektika.lt/",
     "secure": false,
-    "pathRewrite": {"^/synthesis.service": ""},
+    //"pathRewrite": {"^/synthesis.service": ""},
     "logLevel": "debug"
   },
   "/synthesis.sayings/": {
-    "target": "http://localhost:7050/",
+    "target": "https://sinteze.intelektika.lt/",
     "secure": false,
     //"pathRewrite": {"^/synthesis.sayings": ""}
     "logLevel": "debug"

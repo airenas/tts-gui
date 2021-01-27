@@ -26,12 +26,15 @@ export class SynthesisComponent implements OnInit {
   private modelVar: Model;
   models: Model[];
   audio: HTMLAudioElement;
+  isFirefox: boolean;
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
     protected errorService: ErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
-    protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) { }
+    protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) { 
+      this.isFirefox = params.isFirefox();
+    }
 
   ngOnInit() {
     // console.log("ServiceURL=" + this.serviceURL)
@@ -136,7 +139,9 @@ export class SynthesisComponent implements OnInit {
 
   clearPlayer(): void {
     const audio = document.getElementById('player') as HTMLAudioElement;
-    audio.src = '';
+    if (audio) {
+      audio.src = '';
+    }
   }
 
   clickModel(model: Model) {

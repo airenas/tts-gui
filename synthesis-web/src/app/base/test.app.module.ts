@@ -60,7 +60,12 @@ export class TestHelper {
     if (element === null || element.nativeElement === null) {
       return false;
     }
-    return !element.nativeElement.hasAttribute('hidden') && (element.parent == null || TestHelper.Visible(element.parent));
+    return !(TestHelper.displayNone(element) || element.nativeElement.hasAttribute('hidden')) &&
+      (element.parent == null || TestHelper.Visible(element.parent));
+  }
+
+  static displayNone(element: any): boolean {
+    return element.nativeElement.style.display === 'none';
   }
 }
 
