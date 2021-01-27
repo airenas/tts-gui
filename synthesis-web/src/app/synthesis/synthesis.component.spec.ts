@@ -85,6 +85,28 @@ describe('SynthesisComponent', () => {
     });
   }));
 
+  it('should show download button on Firefox', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = true;
+    component.onResult({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButton')))).toBe(true);
+    });
+  }));
+
+  it('should not show download button', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = false;
+    component.onResult({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButton')))).toBe(false);
+    });
+  }));
+
   // it('should show info paragraph', waitForAsync(() => {
   //   component.model = { id: 'id', name: 'olia', url: '/url', info: 'olialia' };
   //   fixture.detectChanges();
