@@ -9,6 +9,7 @@ import { SayingService } from '../service/saying.service';
 import { Model } from '../api/model';
 import { ModelsService } from '../service/models.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-synthesis',
@@ -29,14 +30,24 @@ export class SynthesisComponent implements OnInit {
   isFirefox: boolean;
   isTesting: boolean;
 
+  audioFormat: string;
+  textFormat: string;
+
+  audioData: SafeResourceUrl;
+  audioDownloadFile: string;
+
+
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
     protected errorService: ErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
-    protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) {
-      this.isFirefox = params.isFirefox();
-      this.isTesting = false;
-    }
+    protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config,
+    private domSanitizer: DomSanitizer) {
+    this.isFirefox = params.isFirefox();
+    this.isTesting = false;
+    this.audioFormat = 'mp3';
+    this.textFormat = 'normalized';
+  }
 
   ngOnInit() {
     // console.log("ServiceURL=" + this.serviceURL)
@@ -58,7 +69,7 @@ export class SynthesisComponent implements OnInit {
     this.sending = true;
     this.errorText = '';
 
-    this.synthesisService.synthesize(this.text, this.model.url)
+    this.synthesisService.synthesize(this.text, this.model.url, this.audioFormat)
       .subscribe(
         result => {
           this.sending = false;
@@ -93,12 +104,23 @@ export class SynthesisComponent implements OnInit {
     } else {
       this.uErrorService.clear();
       const audio = document.getElementById('player') as HTMLAudioElement;
-      audio.src = 'data:audio/mp3;base64,' + result.audioAsString;
+      audio.src = 'data:audio/' + this.audioFormatForPlayer(this.audioFormat) + ';base64,' + result.audioAsString;
       if (!this.isTesting) {
         audio.play();
       }
       this.audio = audio;
+      if (this.isFirefox) {
+        this.audioData = this.domSanitizer.bypassSecurityTrustResourceUrl(audio.src);
+        this.audioDownloadFile = 'audio.' + this.audioFormat
+      }
     }
+  }
+
+  audioFormatForPlayer(s: string): string {
+    if (s == 'm4a') {
+       return 'aac';
+    }
+    return s;
   }
 
   initModels() {

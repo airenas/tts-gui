@@ -15,6 +15,40 @@
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
         <p>Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės apsaugos įstatymų.</p>
       </div>
+      <mat-accordion>
+        <mat-expansion-panel class="settings-panel">
+          <mat-expansion-panel-header class="settings-">
+            <mat-panel-title>
+              Nustatymai
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="settings-container">
+            <mat-form-field class="model-field" appearance="fill">
+              <mat-label>Diktorius</mat-label>
+              <mat-select [(value)]="model">
+                <mat-option [value]="m" *ngFor="let m of models" matTooltip="{{m.description}}">{{ m.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="format-field" appearance="fill">
+              <mat-label>Audio formatas</mat-label>
+              <mat-select [(value)]="audioFormat">
+                <mat-option value="mp3" matTooltip="MP3">mp3</mat-option>
+                <mat-option value="m4a" matTooltip="M4A">m4a</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="text-format-field" appearance="fill">
+              <mat-label>Teksto formatas</mat-label>
+              <mat-select [(value)]="textFormat">
+                <mat-option value="normalized" matTooltip="Normalizuotas">Normalizuotas</mat-option>
+                <mat-option value="accented" matTooltip="Kirčiuotas">Kirčiuotas</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
       <!-- <div class="controls-container">
         <mat-form-field class="models-select" appearance="none">
           <mat-label>Diktorius</mat-label>
@@ -43,8 +77,8 @@
             <audio class="audio-comp" controls id="player"></audio>
           </div>
           <div *ngIf="isFirefox" class="download-button-div">
-            <a mat-button *ngIf="audio" id="audioDownloadButton" class="download-button" href="{{audio.src}}" target="_blank"
-              download="download.mp3">
+            <a mat-button *ngIf="audio" id="audioDownloadButton" class="download-button" [href]="audioData"
+              target="_blank" download="{{audioDownloadFile}}">
               <i class="material-icons">cloud_download</i></a>
           </div>
         </div>

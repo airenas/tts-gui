@@ -9,7 +9,7 @@ import { ErrorCodes } from '../api/check';
 
 @Injectable()
 export abstract class SynthesisService {
-  abstract synthesize(text: string, model: string): Observable<SynthesisResult>;
+  abstract synthesize(text: string, model: string, format: string): Observable<SynthesisResult>;
 }
 
 @Injectable()
@@ -37,7 +37,7 @@ export class HttpSynthesisService implements SynthesisService {
   constructor(public http: HttpClient, private config: Config) {
   }
 
-  synthesize(text: string, model: string): Observable<SynthesisResult> {
+  synthesize(text: string, model: string, format: string): Observable<SynthesisResult> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const httpOptions = {
@@ -45,7 +45,7 @@ export class HttpSynthesisService implements SynthesisService {
         Accept: 'application/json'
       })
     };
-    return this.http.post(this.config.synthesisURL + model, { text }, httpOptions)
+    return this.http.post(this.config.synthesisURL + model, { text, outputFormat: format }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })

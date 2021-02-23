@@ -6,11 +6,11 @@ const PROXY_CONFIG = {
     // "pathRewrite": {"^/synthesis.service": ""},
     "logLevel": "debug"
   },
-  "/synthesis.data/": {
+  "/synthesis.data/models.json": {
     //"target": "http://localhost:7050/",
-    "target": "https://sinteze.intelektika.lt/",
+    "target": "https://sinteze.intelektika.lt/lupa/assets/models.json",
     "secure": false,
-    //"pathRewrite": {"^/synthesis.service": ""},
+    "pathRewrite": {"^/synthesis.data/models.json": ""},
     "logLevel": "debug"
   },
   "/synthesis.sayings/": {
