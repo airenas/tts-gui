@@ -1,3 +1,4 @@
 synthesis-web/src/environments/environment.prod.ts
 Makefile.options
 deploy/**
+tts-component-0.**.tar.gz
