@@ -63,7 +63,7 @@ export class HttpSynthesisService implements SynthesisService {
       }),
       params: { requestID: request }
     };
-    const modelCustom = this.changeEndpoint(model)
+    const modelCustom = this.changeEndpoint(model);
     return this.http.post(this.config.synthesisURL + modelCustom,
       { text }, httpOptions)
       .map(res => {
@@ -74,8 +74,8 @@ export class HttpSynthesisService implements SynthesisService {
 
   changeEndpoint(model: string): string {
     if (model.endsWith('synthesize')) {
-      return model + 'Custom'
+      return model + 'Custom';
     }
-    console.error('Wrong synthesize method ' + model)
+    console.error('Wrong synthesize method ' + model);
   }
 }

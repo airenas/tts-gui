@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SynthesisComponent implements OnInit {
   // tslint:disable-next-line: no-input-rename
   @Input('service-url') serviceUrl: string;
+  // tslint:disable-next-line: no-input-rename
   @Input('partnership-url') partnershipURL: string;
   sending = false;
   sendingModified = false;
@@ -38,7 +39,7 @@ export class SynthesisComponent implements OnInit {
   isTesting: boolean;
   requestID: string;
   textFormat: string;
-  
+
   debugMode: boolean;
   debugClick: number;
 
@@ -68,7 +69,7 @@ export class SynthesisComponent implements OnInit {
       this.text = this.params.text;
     }
     this.initModels();
-    console.log("partnerystės URL: " + this.partnershipURL)
+    console.log('Partnerystės URL: ' + this.partnershipURL);
   }
 
   synthesize() {
@@ -194,7 +195,7 @@ export class SynthesisComponent implements OnInit {
 
   get canSynthesizeModified(): boolean {
     return !this.sendingModified && this.textModified && this.textModified.trim() !== '' && this.model
-      && this.conditionChecked && this.conditionAllowCollect && (this.requestID || '') != '';
+      && this.conditionChecked && this.conditionAllowCollect && (this.requestID || '') !== '';
   }
 
   get conditionAllowCollect(): boolean {
@@ -252,11 +253,11 @@ export class SynthesisComponent implements OnInit {
     return msg + ' ' + String(error);
   }
 
-  debugModeClick():void {
+  debugModeClick(): void {
     this.debugClick++;
     if (!this.debugMode && this.debugClick > 5) {
       this.debugMode = true;
-      this.snackBar.open("Debug režimas įjungtas", "Info", { duration: 3000 });
+      this.snackBar.open('Debug režimas įjungtas', 'Info', { duration: 3000 });
     }
   }
 }
