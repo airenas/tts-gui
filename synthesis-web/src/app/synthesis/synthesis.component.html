@@ -83,7 +83,7 @@
               <audio class="audio-comp" controls id="playerModified"></audio>
             </div>
             <div *ngIf="isFirefox" class="download-button-div">
-              <a mat-button *ngIf="audio" id="audioDownloadModifiedButton" class="download-button" href="{{audioModified.src}}"
+              <a mat-button *ngIf="audioModified" id="audioDownloadModifiedButton" class="download-button" href="{{audioModified.src}}"
                 target="_blank" download="download.mp3">
                 <i class="material-icons">cloud_download</i></a>
             </div>
