@@ -28,7 +28,10 @@ import { MatSelectModule } from '@angular/material/select';
 
 @Injectable()
 export class MockSynthesisService implements SynthesisService {
-  synthesize(text: string): Observable<SynthesisResult> {
+  synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult> {
+    return EMPTY;
+  }
+  synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult> {
     return EMPTY;
   }
 }
