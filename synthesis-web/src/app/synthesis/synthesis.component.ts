@@ -20,23 +20,33 @@ export class SynthesisComponent implements OnInit {
   // tslint:disable-next-line: no-input-rename
   @Input('service-url') serviceUrl: string;
   sending = false;
+  sendingModified = false;
   private textInternal: string;
+  private textModifiedInternal: string;
   conditionChecked: boolean;
+  conditionAllowCollectInternal: boolean;
+  allowCollectInfoURL: string;
+
   errorText: string;
+  errorTextModified: string;
+  modifiedPanelDisplay: string;
   private modelVar: Model;
   models: Model[];
   audio: HTMLAudioElement;
+  audioModified: HTMLAudioElement;
   isFirefox: boolean;
   isTesting: boolean;
+  requestID: string;
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
     protected errorService: ErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
     protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) {
-      this.isFirefox = params.isFirefox();
-      this.isTesting = false;
-    }
+    this.isFirefox = params.isFirefox();
+    this.isTesting = false;
+    this.conditionAllowCollect = true;
+  }
 
   ngOnInit() {
     // console.log("ServiceURL=" + this.serviceURL)
@@ -58,7 +68,7 @@ export class SynthesisComponent implements OnInit {
     this.sending = true;
     this.errorText = '';
 
-    this.synthesisService.synthesize(this.text, this.model.url)
+    this.synthesisService.synthesize(this.text, this.model.url, this.conditionAllowCollect)
       .subscribe(
         result => {
           this.sending = false;
@@ -67,6 +77,25 @@ export class SynthesisComponent implements OnInit {
         error => {
           this.sending = false;
           this.errorText = this.uErrorService.getErrorMsg(error);
+          console.error(error);
+        }
+      );
+  }
+
+  synthesizeModified() {
+    console.log('synthesizeModified');
+    this.sendingModified = true;
+    this.errorTextModified = '';
+
+    this.synthesisService.synthesizeCustom(this.textModified, this.model.url, this.requestID)
+      .subscribe(
+        result => {
+          this.sendingModified = false;
+          this.onResultModified(result);
+        },
+        error => {
+          this.sendingModified = false;
+          this.errorTextModified = this.uErrorService.getErrorMsg(error);
           console.error(error);
         }
       );
@@ -90,6 +119,8 @@ export class SynthesisComponent implements OnInit {
       this.errorText = this.errorService.getErrorMsg(result.validationFailItems[0]);
     } else if (result.error && result.error !== '') {
       this.errorText = this.uErrorService.getErrorMsg(result.error);
+    } else if (result.message && result.message !== '') {
+      this.errorText = this.uErrorService.getErrorMsg(result.message);
     } else {
       this.uErrorService.clear();
       const audio = document.getElementById('player') as HTMLAudioElement;
@@ -98,6 +129,27 @@ export class SynthesisComponent implements OnInit {
         audio.play();
       }
       this.audio = audio;
+      this.textModified = result.text;
+      this.requestID = result.requestID;
+    }
+  }
+
+  onResultModified(result: SynthesisResult): void {
+    console.log('on result');
+    if (result.validationFailItems && result.validationFailItems.length > 0) {
+      this.errorTextModified = this.errorService.getErrorMsg(result.validationFailItems[0]);
+    } else if (result.error && result.error !== '') {
+      this.errorTextModified = this.uErrorService.getErrorMsg(result.error);
+    } else if (result.message && result.message !== '') {
+      this.errorTextModified = this.uErrorService.getErrorMsg(result.message);
+    } else {
+      this.uErrorService.clear();
+      const audio = document.getElementById('playerModified') as HTMLAudioElement;
+      audio.src = 'data:audio/mp3;base64,' + result.audioAsString;
+      if (!this.isTesting) {
+        audio.play();
+      }
+      this.audioModified = audio;
     }
   }
 
@@ -132,6 +184,20 @@ export class SynthesisComponent implements OnInit {
     return !this.sending && this.text && this.text.trim() !== '' && this.model && this.conditionChecked;
   }
 
+  get canSynthesizeModified(): boolean {
+    return !this.sendingModified && this.textModified && this.textModified.trim() !== '' && this.model
+      && this.conditionChecked && this.conditionAllowCollect && (this.requestID || '') != '';
+  }
+
+  get conditionAllowCollect(): boolean {
+    return this.conditionAllowCollectInternal;
+  }
+
+  set conditionAllowCollect(value: boolean) {
+    this.conditionAllowCollectInternal = value;
+    this.modifiedPanelDisplay = value ? 'block' : 'none';
+  }
+
   get text(): string {
     return this.textInternal;
   }
@@ -139,6 +205,14 @@ export class SynthesisComponent implements OnInit {
   set text(value: string) {
     this.textInternal = value;
     this.params.text = value;
+  }
+
+  get textModified(): string {
+    return this.textModifiedInternal;
+  }
+
+  set textModified(value: string) {
+    this.textModifiedInternal = value;
   }
 
   clearPlayer(): void {

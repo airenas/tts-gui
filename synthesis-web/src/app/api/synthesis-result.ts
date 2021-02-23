@@ -2,7 +2,10 @@ export interface SynthesisResult {
     synthesisStatus?: string;
     audioAsString?: string;
     error?: string;
+    message?: string;
     validationFailItems?: ValidateFailItem[];
+    requestID?: string;
+    text?: string;
 }
 
 export interface ValidateFailItem {

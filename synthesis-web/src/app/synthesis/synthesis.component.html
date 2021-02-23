@@ -13,7 +13,13 @@
       </div>
       <div class="controls-container">
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
-        <p>Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės apsaugos įstatymų.</p>
+        <p class="condition-text">Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės
+          apsaugos įstatymų.</p>
+      </div>
+      <div class="controls-check-container">
+        <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionAllowCollect"></mat-checkbox>
+        <p class="condition-text">Noriu dalyvauti <a href={{allowCollectInfoURL}} rel="noopener" target="_blank">partnerystės programoje</a> ir gauti
+          15% nuolaidą šiai užklausai.</p>
       </div>
       <!-- <div class="controls-container">
         <mat-form-field class="models-select" appearance="none">
@@ -43,9 +49,44 @@
             <audio class="audio-comp" controls id="player"></audio>
           </div>
           <div *ngIf="isFirefox" class="download-button-div">
-            <a mat-button *ngIf="audio" id="audioDownloadButton" class="download-button" href="{{audio.src}}" target="_blank"
-              download="download.mp3">
+            <a mat-button *ngIf="audio" id="audioDownloadButton" class="download-button" href="{{audio.src}}"
+              target="_blank" download="download.mp3">
               <i class="material-icons">cloud_download</i></a>
+          </div>
+        </div>
+      </div> 
+      <div class="modified-component" [style.display]="modifiedPanelDisplay">
+        <div class="text-control">
+          <mat-form-field class="request-input">
+            <input class="request" id="requestInput" matInput placeholder="Užklausos ID" [(ngModel)]="requestID">
+          </mat-form-field>
+        </div>
+        <div class="text-control">
+          <mat-form-field class="full-width">
+            <textarea class="text" id="textInput" matInput mat-autosize minRows="2" placeholder="Pakoreguotas tekstas"
+              [(ngModel)]="textModified"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="controls-container">
+          <button class="synthesis-modified-button" id="synthesisButtonModified" mat-raised-button [disabled]="!canSynthesizeModified"
+            color="primary" (click)="synthesizeModified()">Skaityti pataisytą</button>
+          <div class="result-container" *ngIf="sendingModified">
+            <mat-progress-spinner id="synthesisSpinner" class="upload-spinner" color="primary" mode="indeterminate"
+              diameter="35">
+            </mat-progress-spinner>
+          </div>
+          <div class="result-container" id="errorDiv" *ngIf="!sendingModified && errorTextModified && errorTextModified != ''">
+            <div class="error-container"><span class="error-text">{{errorTextModified}} </span></div>
+          </div>
+          <div class="audio-container" [style.display]="(sending || (errorTextModified && errorTextModified !== '')) ? 'none' : 'flex'">
+            <div class="audio-comp-div">
+              <audio class="audio-comp" controls id="playerModified"></audio>
+            </div>
+            <div *ngIf="isFirefox" class="download-button-div">
+              <a mat-button *ngIf="audio" id="audioDownloadModifiedButton" class="download-button" href="{{audioModified.src}}"
+                target="_blank" download="download.mp3">
+                <i class="material-icons">cloud_download</i></a>
+            </div>
           </div>
         </div>
       </div>

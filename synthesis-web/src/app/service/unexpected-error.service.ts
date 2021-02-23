@@ -14,6 +14,15 @@ export class UnexpectedErrorService {
     if (error === ErrorCodes.OUT_OF_QUOTA) {
       return 'Baigėsi limitas';
     }
+    if (error === 'RequestID not found') {
+      return 'Nerastas užklausos ID';
+    }
+    if (error === 'Original text does not match the modified') {
+      return 'Pakoreguotas tekstas skiriasi nuo originalaus';
+    }
+    if ((error || '').startsWith('Bad accents:')) {
+      return 'Blogas kirtis: ' + error.substr('Bad accents: '.length);
+    }
     this.count++;
     console.log('err count = ', this.count);
     if (this.count <= 2) {

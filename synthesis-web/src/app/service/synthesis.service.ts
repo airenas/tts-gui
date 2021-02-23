@@ -9,7 +9,8 @@ import { ErrorCodes } from '../api/check';
 
 @Injectable()
 export abstract class SynthesisService {
-  abstract synthesize(text: string, model: string): Observable<SynthesisResult>;
+  abstract synthesize(text: string, model: string, allowCollect: boolean): Observable<SynthesisResult>;
+  abstract synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult>;
 }
 
 @Injectable()
@@ -37,7 +38,7 @@ export class HttpSynthesisService implements SynthesisService {
   constructor(public http: HttpClient, private config: Config) {
   }
 
-  synthesize(text: string, model: string): Observable<SynthesisResult> {
+  synthesize(text: string, model: string, allowCollect: boolean): Observable<SynthesisResult> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const httpOptions = {
@@ -45,10 +46,36 @@ export class HttpSynthesisService implements SynthesisService {
         Accept: 'application/json'
       })
     };
-    return this.http.post(this.config.synthesisURL + model, { text }, httpOptions)
+    return this.http.post(this.config.synthesisURL + model,
+      { text, allowCollectData: allowCollect, outputTextFormat: (allowCollect ? 'normalized' : 'none') }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
       .catch(e => HttpSynthesisService.handleError(e));
+  }
+
+  synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult> {
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Accept: 'application/json'
+      }),
+      params: { requestID: request }
+    };
+    const modelCustom = this.changeEndpoint(model)
+    return this.http.post(this.config.synthesisURL + modelCustom,
+      { text }, httpOptions)
+      .map(res => {
+        return res as SynthesisResult;
+      })
+      .catch(e => HttpSynthesisService.handleError(e));
+  }
+  
+  changeEndpoint(model: string): string {
+    if (model.endsWith('synthesize')) {
+      return model + 'Custom'
+    }
+    console.error('Wrong synthesize method ' + model)
   }
 }
