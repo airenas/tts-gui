@@ -13,7 +13,7 @@
       </div>
       <div class="controls-container">
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
-        <p class="condition-text">Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės
+        <p class="condition-text" (click)="debugModeClick()">Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės
           apsaugos įstatymų.</p>
       </div>
       <div class="controls-check-container">
@@ -21,19 +21,36 @@
         <p class="condition-text">Noriu dalyvauti <a href="{{partnershipURL}}" rel="noopener" target="_blank">partnerystės programoje</a> ir gauti
           15% nuolaidą šiai užklausai.</p>
       </div>
-      <!-- <div class="controls-container">
-        <mat-form-field class="models-select" appearance="none">
-          <mat-label>Diktorius</mat-label>
-          <mat-select [(value)]="model" id="modelSelect">
-            <mat-option [value]="m" *ngFor="let m of models" matTooltip="{{m.description}}">{{ m.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
 
-        <p id="infoParagraph" *ngIf="model && model.info" class="info-model">{{model.info}}</p>
-      </div> -->
+      <mat-accordion>
+        <mat-expansion-panel class="settings-panel">
+          <mat-expansion-panel-header class="settings-header">
+            <mat-panel-title>
+              Nustatymai
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="settings-container">
+            <mat-form-field class="model-field" appearance="fill">
+              <mat-label>Diktorius</mat-label>
+              <mat-select [(value)]="model">
+                <mat-option [value]="m" *ngFor="let m of models" matTooltip="{{m.description}}">{{ m.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="debugMode" class="text-format-field" appearance="fill">
+              <mat-label>Teksto formatas</mat-label>
+              <mat-select [(value)]="textFormat">
+                <mat-option value="normalized" matTooltip="Normalizuotas">Normalizuotas</mat-option>
+                <mat-option value="accented" matTooltip="Kirčiuotas">Kirčiuotas</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
 
-      <div class="controls-container">
+      <div class="result-controls-container">
         <button class="synthesis-button" id="synthesisButton" mat-raised-button [disabled]="!canSynthesize"
           color="primary" (click)="synthesize()">Skaityti</button>
         <div class="result-container" *ngIf="sending">

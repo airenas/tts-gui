@@ -9,7 +9,7 @@ import { ErrorCodes } from '../api/check';
 
 @Injectable()
 export abstract class SynthesisService {
-  abstract synthesize(text: string, model: string, allowCollect: boolean): Observable<SynthesisResult>;
+  abstract synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult>;
   abstract synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult>;
 }
 
@@ -38,7 +38,7 @@ export class HttpSynthesisService implements SynthesisService {
   constructor(public http: HttpClient, private config: Config) {
   }
 
-  synthesize(text: string, model: string, allowCollect: boolean): Observable<SynthesisResult> {
+  synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const httpOptions = {
@@ -47,7 +47,7 @@ export class HttpSynthesisService implements SynthesisService {
       })
     };
     return this.http.post(this.config.synthesisURL + model,
-      { text, allowCollectData: allowCollect, outputTextFormat: (allowCollect ? 'normalized' : 'none') }, httpOptions)
+      { text, allowCollectData: allowCollect, outputTextFormat: (allowCollect ? textFormat : 'none') }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
@@ -71,7 +71,7 @@ export class HttpSynthesisService implements SynthesisService {
       })
       .catch(e => HttpSynthesisService.handleError(e));
   }
-  
+
   changeEndpoint(model: string): string {
     if (model.endsWith('synthesize')) {
       return model + 'Custom'

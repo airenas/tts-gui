@@ -37,6 +37,10 @@ export class SynthesisComponent implements OnInit {
   isFirefox: boolean;
   isTesting: boolean;
   requestID: string;
+  textFormat: string;
+  
+  debugMode: boolean;
+  debugClick: number;
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
@@ -46,6 +50,9 @@ export class SynthesisComponent implements OnInit {
     this.isFirefox = params.isFirefox();
     this.isTesting = false;
     this.conditionAllowCollect = true;
+    this.textFormat = 'normalized';
+    this.debugClick = 0;
+    this.debugMode = false;
   }
 
   ngOnInit() {
@@ -69,7 +76,7 @@ export class SynthesisComponent implements OnInit {
     this.sending = true;
     this.errorText = '';
 
-    this.synthesisService.synthesize(this.text, this.model.url, this.conditionAllowCollect)
+    this.synthesisService.synthesize(this.text, this.model.url, this.conditionAllowCollect, this.textFormat)
       .subscribe(
         result => {
           this.sending = false;
@@ -243,5 +250,13 @@ export class SynthesisComponent implements OnInit {
 
   asString(msg: string, error: any): string {
     return msg + ' ' + String(error);
+  }
+
+  debugModeClick():void {
+    this.debugClick++;
+    if (!this.debugMode && this.debugClick > 5) {
+      this.debugMode = true;
+      this.snackBar.open("Debug režimas įjungtas", "Info", { duration: 3000 });
+    }
   }
 }
