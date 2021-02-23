@@ -4,7 +4,7 @@ dist_dir=$(CURDIR)/deploy
 port?=8000
 main_dir=synthesis-web
 commit_count=$(shell git rev-list --count HEAD)
-SYNTHESIS_WEB_COMPONENT_VERSION?=0.1
+SYNTHESIS_WEB_COMPONENT_VERSION?=0.2
 version=$(SYNTHESIS_WEB_COMPONENT_VERSION).$(commit_count)
 #####################################################################################
 init: 
