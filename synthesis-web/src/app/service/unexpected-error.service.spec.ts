@@ -50,4 +50,17 @@ describe('UnexpectedErrorService', () => {
   it('return Quota', () => {
     expect(service.getErrorMsg(ErrorCodes.OUT_OF_QUOTA)).toEqual('Baigėsi limitas');
   });
+
+  it('no request', () => {
+    expect(service.getErrorMsg('RequestID not found')).toEqual('Nerastas užklausos ID');
+  });
+
+  it('bad accent', () => {
+    expect(service.getErrorMsg('Bad accents: [olia, aaa]')).toEqual('Blogas kirtis: [olia, aaa]');
+    expect(service.getErrorMsg('Bad accents: [o{l~}ia]')).toEqual('Blogas kirtis: [o{l~}ia]');
+  });
+
+  it('text differs', () => {
+    expect(service.getErrorMsg('Original text does not match the modified')).toEqual('Pakoreguotas tekstas skiriasi nuo originalaus');
+  });
 });
