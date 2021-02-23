@@ -13,7 +13,7 @@
       </div>
       <div class="controls-container">
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
-        <p class="condition-text" (click)="debugModeClick()">Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės
+        <p class="condition-text" (click)="debugModeClick()" id="conditionText">Patvirtinu, kad turiu teisę pateikti tekstą ir tuo nepažeidžiu intelektinės nuosavybės
           apsaugos įstatymų.</p>
       </div>
       <div class="controls-check-container">
@@ -39,7 +39,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="debugMode" class="text-format-field" appearance="fill">
+            <mat-form-field *ngIf="debugMode" class="text-format-field" appearance="fill" id="textFormatSelect">
               <mat-label>Teksto formatas</mat-label>
               <mat-select [(value)]="textFormat">
                 <mat-option value="normalized" matTooltip="Normalizuotas">Normalizuotas</mat-option>

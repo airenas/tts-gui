@@ -88,7 +88,7 @@ describe('SynthesisComponent', () => {
   it('should show download button on Firefox', waitForAsync(() => {
     component.isTesting = true;
     component.isFirefox = true;
-    component.onResult({audioAsString: 'olia'});
+    component.onResult({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(true);
@@ -100,7 +100,7 @@ describe('SynthesisComponent', () => {
     component.isTesting = true;
     component.isFirefox = true;
     component.conditionAllowCollect = true;
-    component.onResultModified({audioAsString: 'olia'});
+    component.onResultModified({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
@@ -112,7 +112,7 @@ describe('SynthesisComponent', () => {
     component.isTesting = true;
     component.isFirefox = false;
     component.conditionAllowCollect = true;
-    component.onResultModified({audioAsString: 'olia'});
+    component.onResultModified({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
@@ -123,7 +123,7 @@ describe('SynthesisComponent', () => {
   it('should not show download button', waitForAsync(() => {
     component.isTesting = true;
     component.isFirefox = false;
-    component.onResult({audioAsString: 'olia'});
+    component.onResult({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(true);
@@ -135,7 +135,7 @@ describe('SynthesisComponent', () => {
     component.isTesting = true;
     component.isFirefox = true;
     component.conditionAllowCollect = true;
-    component.onResultModified({audioAsString: 'olia'});
+    component.onResultModified({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#requestInput')))).toBe(true);
@@ -150,7 +150,7 @@ describe('SynthesisComponent', () => {
     component.isTesting = true;
     component.isFirefox = true;
     component.conditionAllowCollect = false;
-    component.onResultModified({audioAsString: 'olia'});
+    component.onResultModified({ audioAsString: 'olia' });
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#requestInput')))).toBe(false);
@@ -251,6 +251,29 @@ describe('SynthesisComponent', () => {
       fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.click();
       expect(component.synthesizeModified).toHaveBeenCalled();
     });
+  }));
+
+  it('should show textFormat component on debug mode', waitForAsync(() => {
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(false);
+    component.debugMode = true;
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(true);
+    });
+  }));
+
+  it('should show turn debug mode', waitForAsync(() => {
+    expect(component.debugMode).toBe(false);
+    for (let i = 0; i < 6; i++) {
+      component.debugModeClick();
+    }
+    expect(component.debugMode).toBe(true);
+  }));
+
+  it('should invoke debug on par click', waitForAsync(() => {
+    expect(component.debugClick).toBe(0);
+    fixture.debugElement.query(By.css('#conditionText')).nativeElement.click();
+    expect(component.debugClick).toBe(1);
   }));
 });
 
