@@ -96,6 +96,30 @@ describe('SynthesisComponent', () => {
     });
   }));
 
+  it('should show download button modified on Firefox', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = true;
+    component.conditionAllowCollect = true;
+    component.onResultModified({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButtonModified')))).toBe(true);
+    });
+  }));
+
+  it('should hide download button modified on Firefox', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = false;
+    component.conditionAllowCollect = true;
+    component.onResultModified({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButtonModified')))).toBe(false);
+    });
+  }));
+
   it('should not show download button', waitForAsync(() => {
     component.isTesting = true;
     component.isFirefox = false;
@@ -107,23 +131,35 @@ describe('SynthesisComponent', () => {
     });
   }));
 
-  // it('should show info paragraph', waitForAsync(() => {
-  //   component.model = { id: 'id', name: 'olia', url: '/url', info: 'olialia' };
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     const p = fixture.debugElement.query(By.css('#infoParagraph'));
-  //     expect(p.nativeElement.textContent).toEqual('olialia');
-  //     expect(TestHelper.Visible(p)).toBe(true);
-  //   });
-  // }));
+  it('should show modify components', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = true;
+    component.conditionAllowCollect = true;
+    component.onResultModified({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#requestInput')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textModifiedInput')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisButtonModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButtonModified')))).toBe(true);
+    });
+  }));
 
-  // it('should hide info paragraph', waitForAsync(() => {
-  //   component.model = { id: 'id', name: 'olia', url: '/url' };
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#infoParagraph')))).toBe(false);
-  //   });
-  // }));
+  it('should hide modify components', waitForAsync(() => {
+    component.isTesting = true;
+    component.isFirefox = true;
+    component.conditionAllowCollect = false;
+    component.onResultModified({audioAsString: 'olia'});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#requestInput')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textModifiedInput')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisButtonModified')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#audioDownloadButtonModified')))).toBe(false);
+    });
+  }));
 
   it('should show spinner', waitForAsync(() => {
     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisSpinner')))).toBe(false);
@@ -134,6 +170,86 @@ describe('SynthesisComponent', () => {
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDiv')))).toBe(false);
       expect(TestHelper.Visible(fixture.debugElement.query(By.css('#player')))).toBe(false);
       expect(fixture.debugElement.query(By.css('#synthesisButton')).nativeElement.disabled).toBe(true);
+    });
+  }));
+
+  it('should show modify spinner', waitForAsync(() => {
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisSpinnerModified')))).toBe(false);
+    component.sendingModified = true;
+    component.conditionAllowCollect = true;
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#synthesisSpinnerModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(false);
+      expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(true);
+    });
+  }));
+
+  it('should have readonly modified button', waitForAsync(() => {
+    component.conditionAllowCollect = true;
+    expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(true);
+  }));
+
+  it('should have enabled button on valid Input', waitForAsync(() => {
+    expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(true);
+    component.textModified = 'olia';
+    component.conditionChecked = true;
+    component.conditionAllowCollect = true;
+    component.requestID = 'olia';
+    component.model = { id: 'id', name: 'name', url: '/url' };
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(false);
+    });
+  }));
+
+  it('should have disabled button on no text', waitForAsync(() => {
+    component.conditionChecked = true;
+    component.conditionAllowCollect = true;
+    component.requestID = 'olia';
+    component.model = { id: 'id', name: 'name', url: '/url' };
+    component.textModified = '';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(true);
+    });
+  }));
+
+  it('should have disabled button on no request', waitForAsync(() => {
+    component.conditionChecked = true;
+    component.conditionAllowCollect = true;
+    component.requestID = '';
+    component.model = { id: 'id', name: 'name', url: '/url' };
+    component.textModified = 'olia';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.disabled).toBe(true);
+    });
+  }));
+
+
+  it('should show modified error', waitForAsync(() => {
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(false);
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
+    component.errorTextModified = 'error';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(true);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(false);
+    });
+  }));
+
+  it('should invoke synthesizeModified on click', waitForAsync(() => {
+    component.textModified = 'olia';
+    component.model = { id: 'id', name: 'name', url: '/url' };
+    component.conditionChecked = true;
+    component.requestID = 'rolia';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      spyOn(component, 'synthesizeModified');
+      fixture.debugElement.query(By.css('#synthesisButtonModified')).nativeElement.click();
+      expect(component.synthesizeModified).toHaveBeenCalled();
     });
   }));
 });

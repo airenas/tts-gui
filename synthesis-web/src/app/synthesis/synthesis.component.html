@@ -80,7 +80,7 @@
         </div>
         <div class="text-control">
           <mat-form-field class="full-width">
-            <textarea class="text" id="textInput" matInput mat-autosize minRows="2" placeholder="Pakoreguotas tekstas"
+            <textarea class="text" id="textModifiedInput" matInput mat-autosize minRows="2" placeholder="Pakoreguotas tekstas"
               [(ngModel)]="textModified"></textarea>
           </mat-form-field>
         </div>
@@ -88,19 +88,19 @@
           <button class="synthesis-modified-button" id="synthesisButtonModified" mat-raised-button [disabled]="!canSynthesizeModified"
             color="primary" (click)="synthesizeModified()">Skaityti pataisytą</button>
           <div class="result-container" *ngIf="sendingModified">
-            <mat-progress-spinner id="synthesisSpinner" class="upload-spinner" color="primary" mode="indeterminate"
+            <mat-progress-spinner id="synthesisSpinnerModified" class="upload-spinner" color="primary" mode="indeterminate"
               diameter="35">
             </mat-progress-spinner>
           </div>
-          <div class="result-container" id="errorDiv" *ngIf="!sendingModified && errorTextModified && errorTextModified != ''">
+          <div class="result-container" id="errorDivModified" *ngIf="!sendingModified && errorTextModified && errorTextModified != ''">
             <div class="error-container"><span class="error-text">{{errorTextModified}} </span></div>
           </div>
-          <div class="audio-container" [style.display]="(sending || (errorTextModified && errorTextModified !== '')) ? 'none' : 'flex'">
+          <div class="audio-container" [style.display]="(sendingModified || (errorTextModified && errorTextModified !== '')) ? 'none' : 'flex'">
             <div class="audio-comp-div">
               <audio class="audio-comp" controls id="playerModified"></audio>
             </div>
             <div *ngIf="isFirefox" class="download-button-div">
-              <a mat-button *ngIf="audioModified" id="audioDownloadModifiedButton" class="download-button" href="{{audioModified.src}}"
+              <a mat-button *ngIf="audioModified" id="audioDownloadButtonModified" class="download-button" href="{{audioModified.src}}"
                 target="_blank" download="download.mp3">
                 <i class="material-icons">cloud_download</i></a>
             </div>
