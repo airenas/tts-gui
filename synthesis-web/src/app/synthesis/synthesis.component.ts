@@ -19,13 +19,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SynthesisComponent implements OnInit {
   // tslint:disable-next-line: no-input-rename
   @Input('service-url') serviceUrl: string;
+  @Input('partnership-url') partnershipURL: string;
   sending = false;
   sendingModified = false;
   private textInternal: string;
   private textModifiedInternal: string;
   conditionChecked: boolean;
   conditionAllowCollectInternal: boolean;
-  allowCollectInfoURL: string;
 
   errorText: string;
   errorTextModified: string;
@@ -61,6 +61,7 @@ export class SynthesisComponent implements OnInit {
       this.text = this.params.text;
     }
     this.initModels();
+    console.log("partnerystės URL: " + this.partnershipURL)
   }
 
   synthesize() {
