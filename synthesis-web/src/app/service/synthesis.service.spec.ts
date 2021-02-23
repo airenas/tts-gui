@@ -79,3 +79,14 @@ describe('Handle error', () => {
     );
   });
 });
+
+describe('Change endpoint', () => {
+  it('changes', () => {
+    expect(HttpSynthesisService.changeEndpoint('olia/synthesize')).toEqual('olia/synthesizeCustom');
+    expect(HttpSynthesisService.changeEndpoint('/synthesize')).toEqual('/synthesizeCustom');
+  });
+  it('leaves', () => {
+    expect(HttpSynthesisService.changeEndpoint('/olia')).toEqual('/olia');
+    expect(HttpSynthesisService.changeEndpoint('')).toEqual('');
+  });
+});
