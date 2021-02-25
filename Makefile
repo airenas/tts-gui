@@ -1,4 +1,4 @@
--include ../Makefile.options
+-include Makefile.options
 #####################################################################################
 dist_dir=$(CURDIR)/deploy
 port?=8000
@@ -44,8 +44,10 @@ $(dist_dir)/tts:
 tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/tts	
 	tar -czf $@ -C $(dist_dir) tts
 
-
 #####################################################################################
+put-component:
+	scp tts-component-$(version).tar.gz $(component-share)
+
 clean:
 	rm -rf $(dist_dir)
 
