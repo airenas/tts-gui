@@ -3,7 +3,7 @@
     <div class="full-width">
       <div class="text-control">
         <mat-form-field class="full-width">
-          <textarea class="text" id="textInput" matInput mat-autosize minRows="2" placeholder="Tekstas"
+          <textarea class="text" id="textInput" matInput placeholder="Tekstas"
             [(ngModel)]="text"></textarea>
         </mat-form-field>
         <button class="next-text-button" id="nextTextButton" mat-stroked-button (click)="nextText()"
@@ -80,7 +80,7 @@
         </div>
         <div class="text-control">
           <mat-form-field class="full-width">
-            <textarea class="text" id="textModifiedInput" matInput mat-autosize minRows="2" placeholder="Pakoreguotas tekstas"
+            <textarea class="text" id="textModifiedInput" matInput placeholder="Pakoreguotas tekstas"
               [(ngModel)]="textModified"></textarea>
           </mat-form-field>
         </div>
