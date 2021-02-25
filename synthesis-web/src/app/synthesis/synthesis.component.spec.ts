@@ -230,13 +230,17 @@ describe('SynthesisComponent', () => {
 
 
   it('should show modified error', waitForAsync(() => {
-    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(false);
-    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
-    component.errorTextModified = 'error';
+    component.conditionAllowCollect = true;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(true);
-      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(false);
+      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(true);
+      component.errorTextModified = 'error';
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(TestHelper.Visible(fixture.debugElement.query(By.css('#errorDivModified')))).toBe(true);
+        expect(TestHelper.Visible(fixture.debugElement.query(By.css('#playerModified')))).toBe(false);
+      });
     });
   }));
 
@@ -244,6 +248,7 @@ describe('SynthesisComponent', () => {
     component.textModified = 'olia';
     component.model = { id: 'id', name: 'name', url: '/url' };
     component.conditionChecked = true;
+    component.conditionAllowCollect = true;
     component.requestID = 'rolia';
     fixture.detectChanges();
     fixture.whenStable().then(() => {

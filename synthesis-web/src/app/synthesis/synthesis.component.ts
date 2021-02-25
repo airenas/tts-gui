@@ -50,7 +50,7 @@ export class SynthesisComponent implements OnInit {
     protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) {
     this.isFirefox = params.isFirefox();
     this.isTesting = false;
-    this.conditionAllowCollect = true;
+    this.conditionAllowCollect = false;
     this.textFormat = 'normalized';
     this.debugClick = 0;
     this.debugMode = false;
