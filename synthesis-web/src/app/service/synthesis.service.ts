@@ -55,7 +55,7 @@ export class HttpSynthesisService implements SynthesisService {
       })
     };
     return this.http.post(this.config.synthesisURL + model,
-      { text, allowCollectData: allowCollect, outputTextFormat: (allowCollect ? textFormat : 'none') }, httpOptions)
+      { text, saveRequest: allowCollect, outputTextFormat: (allowCollect ? textFormat : 'none') }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
