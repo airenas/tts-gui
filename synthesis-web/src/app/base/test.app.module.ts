@@ -1,4 +1,4 @@
-import { SynthesisService } from './../service/synthesis.service';
+import { SynthesisService, SynthParams } from './../service/synthesis.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -25,13 +25,14 @@ import { ModelsService } from '../service/models.service';
 import { Model } from '../api/model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Injectable()
 export class MockSynthesisService implements SynthesisService {
-  synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult> {
+  synthesize(params: SynthParams): Observable<SynthesisResult> {
     return EMPTY;
   }
-  synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult> {
+  synthesizeCustom(params: SynthParams): Observable<SynthesisResult> {
     return EMPTY;
   }
 }
@@ -81,7 +82,7 @@ export class TestHelper {
     MatTabsModule, MatButtonModule, MatInputModule, FormsModule,
     MatSnackBarModule, MatProgressBarModule, MatSelectModule,
     MatMenuModule, MatProgressSpinnerModule, MatTooltipModule,
-    MatCardModule, ReactiveFormsModule
+    MatCardModule, ReactiveFormsModule, MatSliderModule
   ],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' },
   { provide: ActivatedRoute, useClass: MockActivatedRoute },
@@ -95,7 +96,7 @@ export class TestHelper {
   exports: [
     MatTabsModule, MatButtonModule, MatInputModule, FormsModule,
     MatSnackBarModule, MatCardModule, MatProgressBarModule, MatProgressSpinnerModule, MatMenuModule,
-    MatTooltipModule, MatSelectModule, MatCheckboxModule
+    MatTooltipModule, MatSelectModule, MatCheckboxModule, MatSliderModule
   ],
 })
 
