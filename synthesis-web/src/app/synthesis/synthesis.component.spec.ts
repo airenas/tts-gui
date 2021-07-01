@@ -267,6 +267,33 @@ describe('SynthesisComponent', () => {
     });
   }));
 
+  it('should show slider', waitForAsync(() => {
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#speedLabel')))).toBe(true);
+    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#speedSlider')))).toBe(true);
+  }));
+
+  it('calc speed value', waitForAsync(() => {
+    expect(component.calcSpeedValue(100)).toEqual(1);
+    expect(component.calcSpeedValue(200)).toEqual(0.5);
+    expect(component.calcSpeedValue(0)).toEqual(2);
+    expect(component.calcSpeedValue(150)).toEqual(0.75);
+    expect(component.calcSpeedValue(50)).toEqual(1.5);
+    expect(component.calcSpeedValue(90)).toEqual(1.1);
+    expect(component.calcSpeedValue(110)).toEqual(0.95);
+    expect(component.calcSpeedValue(190)).toEqual(0.55);
+  }));
+
+  it('format speed value', waitForAsync(() => {
+    expect(component.formatSpeed(100)).toEqual('100%');
+    expect(component.formatSpeed(200)).toEqual('200%');
+    expect(component.formatSpeed(0)).toEqual('50%');
+    expect(component.formatSpeed(150)).toEqual('150%');
+    expect(component.formatSpeed(50)).toEqual('75%');
+    expect(component.formatSpeed(90)).toEqual('95%');
+    expect(component.formatSpeed(110)).toEqual('110%');
+    expect(component.formatSpeed(190)).toEqual('190%');
+  }));
+
   it('should show turn debug mode', waitForAsync(() => {
     expect(component.debugMode).toBe(false);
     for (let i = 0; i < 6; i++) {

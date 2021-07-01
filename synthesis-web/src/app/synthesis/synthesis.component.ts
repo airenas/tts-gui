@@ -279,7 +279,7 @@ export class SynthesisComponent implements OnInit {
     return r;
   }
 
-  formatSpeed(v: number) {
+  formatSpeed(v: number): string {
     let r = v;
     if (v < 100) {
       r = 50 + (v / 2);

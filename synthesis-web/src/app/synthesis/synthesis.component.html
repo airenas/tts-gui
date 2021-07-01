@@ -44,7 +44,7 @@
               <div>
                 <label id="speedLabel" class="speed-label">Kalbėjimo greitis</label>
               </div>
-              <mat-slider thumbLabel [(ngModel)]="speed" [displayWith]="formatSpeed" tickInterval="10" step="10"
+              <mat-slider id="speedSlider" thumbLabel [(ngModel)]="speed" [displayWith]="formatSpeed" tickInterval="10" step="10"
                 min="0" max="200" aria-labelledby="speedLabel" color="primary" class="speed-slider"></mat-slider>
             </div>
             <mat-form-field *ngIf="debugMode" class="text-format-field" appearance="fill" id="textFormatSelect">
