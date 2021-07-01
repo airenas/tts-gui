@@ -1,20 +1,21 @@
+const srv="http://192.168.1.83:8010/";
+const srv1="https://sinteze.intelektika.lt/";
+
 const PROXY_CONFIG = {
-  "/synthesis.service/": {
-    //"target": "http://localhost:7050/",
-    "target": "https://sinteze.intelektika.lt/",
+  "/synthesis.service/astra": {
+    "target": srv,
     "secure": false,
-    // "pathRewrite": {"^/synthesis.service": ""},
+    "pathRewrite": {"^/synthesis.service/astra": ""},
     "logLevel": "debug"
   },
   "/synthesis.data/": {
-    //"target": "http://localhost:7050/",
-    "target": "https://sinteze.intelektika.lt/",
+    "target": srv1,
     "secure": false,
     //"pathRewrite": {"^/synthesis.service": ""},
     "logLevel": "debug"
   },
   "/synthesis.sayings/": {
-    "target": "https://sinteze.intelektika.lt/",
+    "target": srv1,
     "secure": false,
     //"pathRewrite": {"^/synthesis.sayings": ""}
     "logLevel": "debug"
