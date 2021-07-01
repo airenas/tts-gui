@@ -1,14 +1,14 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Model } from '../api/model';
+import { SynthesisResult } from '../api/synthesis-result';
+import { ErrorService } from '../service/error.service';
+import { ModelsService } from '../service/models.service';
+import { SayingService } from '../service/saying.service';
+import { SynthesisService } from '../service/synthesis.service';
 import { Config } from './../config';
 import { ParamsProviderService } from './../service/params-provider.service';
 import { UnexpectedErrorService } from './../service/unexpected-error.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { SynthesisService } from '../service/synthesis.service';
-import { SynthesisResult } from '../api/synthesis-result';
-import { ErrorService } from '../service/error.service';
-import { SayingService } from '../service/saying.service';
-import { Model } from '../api/model';
-import { ModelsService } from '../service/models.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-synthesis',
@@ -39,6 +39,7 @@ export class SynthesisComponent implements OnInit {
   isTesting: boolean;
   requestID: string;
   textFormat: string;
+  speed: number;
 
   debugMode: boolean;
   debugClick: number;
@@ -54,6 +55,7 @@ export class SynthesisComponent implements OnInit {
     this.textFormat = 'normalized';
     this.debugClick = 0;
     this.debugMode = false;
+    this.speed = 100;
   }
 
   ngOnInit() {
@@ -77,7 +79,10 @@ export class SynthesisComponent implements OnInit {
     this.sending = true;
     this.errorText = '';
 
-    this.synthesisService.synthesize(this.text, this.model.url, this.conditionAllowCollect, this.textFormat)
+    this.synthesisService.synthesize({
+      text: this.text, model: this.model.url, allowCollect: this.conditionAllowCollect,
+      textFormat: this.textFormat, speed: this.calcSpeedValue(this.speed)
+    })
       .subscribe(
         result => {
           this.sending = false;
@@ -96,7 +101,9 @@ export class SynthesisComponent implements OnInit {
     this.sendingModified = true;
     this.errorTextModified = '';
 
-    this.synthesisService.synthesizeCustom(this.textModified, this.model.url, this.requestID)
+    this.synthesisService.synthesizeCustom({
+      text: this.textModified, model: this.model.url, request: this.requestID, speed: this.calcSpeedValue(this.speed)
+    })
       .subscribe(
         result => {
           this.sendingModified = false;
@@ -259,5 +266,25 @@ export class SynthesisComponent implements OnInit {
       this.debugMode = true;
       this.snackBar.open('Debug režimas įjungtas', 'Info', { duration: 3000 });
     }
+  }
+
+  calcSpeedValue(v: number): number {
+    let r = v;
+    if (v < 100) {
+      r = 2 - v / 100;
+    } else {
+      r = 1 - (v - 100) / 200;
+    }
+    console.log(v, r);
+    return r;
+  }
+
+  formatSpeed(v: number) {
+    let r = v;
+    if (v < 100) {
+      r = 50 + (v / 2);
+    }
+    console.log(v, r);
+    return r + '%';
   }
 }

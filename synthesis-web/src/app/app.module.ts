@@ -23,6 +23,7 @@ import { createCustomElement } from '@angular/elements';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatSliderModule} from '@angular/material/slider'; 
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     BrowserAnimationsModule,
     MatButtonModule, MatInputModule, MatCardModule, MatSelectModule,
     MatMenuModule, MatProgressSpinnerModule, MatTooltipModule, MatCheckboxModule, MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule, MatSliderModule
   ],
   exports: [MatTabsModule, MatButtonModule, MatProgressSpinnerModule],
   providers: [Config,

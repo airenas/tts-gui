@@ -1,16 +1,16 @@
-import { SynthesisResult } from './../api/synthesis-result';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Config } from '../config';
-import { throwError, Observable, from } from 'rxjs';
-import 'rxjs/add/operator/map';
+import { from, Observable, throwError } from 'rxjs';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import { ErrorCodes } from '../api/check';
+import { Config } from '../config';
+import { SynthesisResult } from './../api/synthesis-result';
 
 @Injectable()
 export abstract class SynthesisService {
-  abstract synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult>;
-  abstract synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult>;
+  abstract synthesize(params: SynthParams): Observable<SynthesisResult>;
+  abstract synthesizeCustom(params: SynthParams): Observable<SynthesisResult>;
 }
 
 @Injectable()
@@ -46,7 +46,7 @@ export class HttpSynthesisService implements SynthesisService {
   constructor(public http: HttpClient, private config: Config) {
   }
 
-  synthesize(text: string, model: string, allowCollect: boolean, textFormat: string): Observable<SynthesisResult> {
+  synthesize(params: SynthParams): Observable<SynthesisResult> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const httpOptions = {
@@ -54,29 +54,42 @@ export class HttpSynthesisService implements SynthesisService {
         Accept: 'application/json'
       })
     };
-    return this.http.post(this.config.synthesisURL + model,
-      { text, saveRequest: allowCollect, outputTextFormat: (allowCollect ? textFormat : 'none') }, httpOptions)
+    return this.http.post(this.config.synthesisURL + params.model,
+      {
+        text: params.text, saveRequest: params.allowCollect,
+        outputTextFormat: (params.allowCollect ? params.textFormat : 'none'),
+        speed: params.speed
+      }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
       .catch(e => HttpSynthesisService.handleError(e));
   }
 
-  synthesizeCustom(text: string, model: string, request: string): Observable<SynthesisResult> {
+  synthesizeCustom(params: SynthParams): Observable<SynthesisResult> {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json'
       }),
-      params: { requestID: request }
+      params: { requestID: params.request }
     };
-    const modelCustom = HttpSynthesisService.changeEndpoint(model);
+    const modelCustom = HttpSynthesisService.changeEndpoint(params.model);
     return this.http.post(this.config.synthesisURL + modelCustom,
-      { text }, httpOptions)
+      { text: params.text, speed: params.speed }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
       .catch(e => HttpSynthesisService.handleError(e));
   }
+}
+
+export interface SynthParams {
+  text?: string;
+  model?: string;
+  allowCollect?: boolean;
+  textFormat?: string;
+  request?: string;
+  speed?: number;
 }
