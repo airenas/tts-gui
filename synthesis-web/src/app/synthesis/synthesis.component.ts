@@ -21,6 +21,8 @@ export class SynthesisComponent implements OnInit {
   @Input('service-url') serviceUrl: string;
   // tslint:disable-next-line: no-input-rename
   @Input('partnership-url') partnershipURL: string;
+  // tslint:disable-next-line: no-input-rename
+  @Input('models-url') modelsUrl: string;
   sending = false;
   sendingModified = false;
   private textInternal: string;
@@ -61,7 +63,7 @@ export class SynthesisComponent implements OnInit {
   ngOnInit() {
     // console.log("ServiceURL=" + this.serviceURL)
     if (this.serviceUrl !== '') {
-      this.config.init(this.serviceUrl);
+      this.config.init(this.serviceUrl, this.modelsUrl);
     }
     this.conditionChecked = false;
     this.errorText = '';
