@@ -30,6 +30,12 @@ The result will be ready at *deploy/html*.
     make test
 ```
 
+## Prepare **docker**
+
+```bash
+    make clean dbuild dpush
+```
+
 ## License
 
 Copyright © 2020, [Airenas Vaičiūnas](https://github.com/airenas), [intelektika.lt](http://intelektika.lt).

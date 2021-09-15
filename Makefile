@@ -43,7 +43,11 @@ $(dist_dir)/tts:
 	mkdir -p $@
 tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/tts	
 	tar -czf $@ -C $(dist_dir) tts
-
+#####################################################################################
+dbuild:
+	cd build/docker && $(MAKE) clean dbuild
+dpush:
+	cd build/docker && $(MAKE) dpush	
 #####################################################################################
 put-component:
 	scp tts-component-$(version).tar.gz $(component-share)
