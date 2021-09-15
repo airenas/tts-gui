@@ -1,7 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { ErrorCodes } from '../api/check';
-
 import { UnexpectedErrorService } from './unexpected-error.service';
+
 
 describe('UnexpectedErrorService', () => {
   let service: UnexpectedErrorService;
@@ -62,5 +63,8 @@ describe('UnexpectedErrorService', () => {
 
   it('text differs', () => {
     expect(service.getErrorMsg('Original text does not match the modified')).toEqual('Pakoreguotas tekstas skiriasi nuo originalaus');
+  });
+  it('text HttpErrorResponse', () => {
+    expect(service.getErrorMsg(new HttpErrorResponse({ status: 403 }))).toEqual('Oi, nesiseka skaityti, pabandykit dar kartą');
   });
 });
