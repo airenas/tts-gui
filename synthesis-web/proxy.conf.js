@@ -3,9 +3,9 @@ const srv1="https://sinteze.intelektika.lt/";
 
 const PROXY_CONFIG = {
   "/synthesis.service/astra": {
-    "target": srv,
+    "target": srv1,
     "secure": false,
-    "pathRewrite": {"^/synthesis.service/astra": ""},
+    // "pathRewrite": {"^/synthesis.service/astra": ""},
     "logLevel": "debug"
   },
   "/synthesis.data/": {

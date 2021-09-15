@@ -58,7 +58,7 @@ export class HttpSynthesisService implements SynthesisService {
       {
         text: params.text, saveRequest: params.allowCollect,
         outputTextFormat: (params.allowCollect ? params.textFormat : 'none'),
-        speed: params.speed
+        speed: params.speed, voice: params.voice
       }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
@@ -77,7 +77,7 @@ export class HttpSynthesisService implements SynthesisService {
     };
     const modelCustom = HttpSynthesisService.changeEndpoint(params.model);
     return this.http.post(this.config.synthesisURL + modelCustom,
-      { text: params.text, speed: params.speed }, httpOptions)
+      { text: params.text, speed: params.speed, voice: params.voice }, httpOptions)
       .map(res => {
         return res as SynthesisResult;
       })
@@ -88,6 +88,7 @@ export class HttpSynthesisService implements SynthesisService {
 export interface SynthParams {
   text?: string;
   model?: string;
+  voice?: string;
   allowCollect?: boolean;
   textFormat?: string;
   request?: string;

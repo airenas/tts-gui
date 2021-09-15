@@ -5,4 +5,5 @@ export interface Model {
     description?: string;
     default?: boolean;
     info?: string;
+    voice?: string;
 }

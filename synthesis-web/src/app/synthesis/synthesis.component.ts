@@ -81,7 +81,7 @@ export class SynthesisComponent implements OnInit {
 
     this.synthesisService.synthesize({
       text: this.text, model: this.model.url, allowCollect: this.conditionAllowCollect,
-      textFormat: this.textFormat, speed: this.calcSpeedValue(this.speed)
+      textFormat: this.textFormat, speed: this.calcSpeedValue(this.speed), voice: this.model.voice
     })
       .subscribe(
         result => {
@@ -102,7 +102,9 @@ export class SynthesisComponent implements OnInit {
     this.errorTextModified = '';
 
     this.synthesisService.synthesizeCustom({
-      text: this.textModified, model: this.model.url, request: this.requestID, speed: this.calcSpeedValue(this.speed)
+      text: this.textModified, model: this.model.url, request: this.requestID, speed: this.calcSpeedValue(this.speed),
+      voice: this.model.voice
+
     })
       .subscribe(
         result => {
