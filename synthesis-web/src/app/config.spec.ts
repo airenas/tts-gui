@@ -15,6 +15,18 @@ describe('Config', () => {
     expect(c.modelsURL).toEqual('server/synthesis.data/models.json');
   });
 
+  it('default models ulr from undefined', () => {
+    const c = new Config();
+    c.init('server', undefined);
+    expect(c.modelsURL).toEqual('server/synthesis.data/models.json');
+  });
+
+  it('default models ulr from null', () => {
+    const c = new Config();
+    c.init('server', null);
+    expect(c.modelsURL).toEqual('server/synthesis.data/models.json');
+  });
+
   it('sets models ulr', () => {
     const c = new Config();
     c.init('server', '/models.json');
