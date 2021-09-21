@@ -38,7 +38,8 @@ $(dist_dir)/tts/info: $(dist_dir)/tts | $(dist_dir)/tts
 	echo version : $(version) > $@
 	echo date    : $(shell date --rfc-3339=seconds) >> $@
 
-pack: tts-component-$(version).tar.gz
+pack: 
+	$(MAKE) clean build && $(MAKE) tts-component-$(version).tar.gz
 $(dist_dir)/tts:
 	mkdir -p $@
 tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/tts	

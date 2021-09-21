@@ -21,7 +21,7 @@ The result will be ready at *deploy/html*.
 ## Pack for deploy
 
 ```bash
-    make clean build && make pack
+    make pack
 ```
 
 ## Test
