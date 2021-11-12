@@ -291,4 +291,8 @@ export class SynthesisComponent implements OnInit {
     console.log(v, r);
     return r + '%';
   }
+
+  conditionClick() {
+    this.conditionChecked = !this.conditionChecked;
+  }
 }
