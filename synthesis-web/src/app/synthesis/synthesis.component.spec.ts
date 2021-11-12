@@ -258,14 +258,14 @@ describe('SynthesisComponent', () => {
     });
   }));
 
-  it('should show textFormat component on debug mode', waitForAsync(() => {
-    expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(false);
-    component.debugMode = true;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(true);
-    });
-  }));
+  // it('should show textFormat component on debug mode', waitForAsync(() => {
+  //   expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(false);
+  //   component.debugMode = true;
+  //   fixture.detectChanges();
+  //   fixture.whenStable().then(() => {
+  //     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#textFormatSelect')))).toBe(true);
+  //   });
+  // }));
 
   it('should show slider', waitForAsync(() => {
     expect(TestHelper.Visible(fixture.debugElement.query(By.css('#speedLabel')))).toBe(true);
@@ -302,11 +302,11 @@ describe('SynthesisComponent', () => {
     expect(component.debugMode).toBe(true);
   }));
 
-  it('should invoke debug on par click', waitForAsync(() => {
-    expect(component.debugClick).toBe(0);
-    fixture.debugElement.query(By.css('#conditionText')).nativeElement.click();
-    expect(component.debugClick).toBe(1);
-  }));
+  // it('should invoke debug on par click', waitForAsync(() => {
+  //   expect(component.debugClick).toBe(0);
+  //   fixture.debugElement.query(By.css('#conditionText')).nativeElement.click();
+  //   expect(component.debugClick).toBe(1);
+  // }));
 });
 
 function testLoadModel(paramModelID: string, models: Model[], expectedID: string) {
