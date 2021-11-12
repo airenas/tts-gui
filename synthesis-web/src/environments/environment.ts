@@ -7,6 +7,7 @@ export const environment = {
   synthesisURL: '/synthesis.service',
   sayingURL: '/synthesis.sayings',
   modelsURL: '/synthesis.data/models.json',
+  version: 'DEV',
 };
 
 /*

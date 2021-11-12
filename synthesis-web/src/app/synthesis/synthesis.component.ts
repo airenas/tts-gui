@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 import { Model } from '../api/model';
 import { SynthesisResult } from '../api/synthesis-result';
 import { ErrorService } from '../service/error.service';
@@ -61,6 +62,7 @@ export class SynthesisComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Version=' + environment.version);
     // console.log("ServiceURL=" + this.serviceURL)
     if (this.serviceUrl !== '') {
       this.config.init(this.serviceUrl, this.modelsUrl);
@@ -77,7 +79,6 @@ export class SynthesisComponent implements OnInit {
   }
 
   synthesize() {
-    console.log('synthesize');
     this.sending = true;
     this.errorText = '';
 
@@ -99,7 +100,6 @@ export class SynthesisComponent implements OnInit {
   }
 
   synthesizeModified() {
-    console.log('synthesizeModified');
     this.sendingModified = true;
     this.errorTextModified = '';
 
