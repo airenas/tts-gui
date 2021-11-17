@@ -51,13 +51,13 @@
 
       <div class="controls-container">
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionChecked"></mat-checkbox>
-        <p class="condition-text" (click)="conditionClick()" id="conditionText">Su paslaugų teikimo sąlygomis ir
+        <p class="condition-text" (click)="conditionClick()" id="conditionText">Su naudojimo sąlygomis ir
           privatumo politika susipažinau ir sutinku</p>
       </div>
 
       <div class="result-controls-container">
         <button class="synthesis-button" id="synthesisButton" mat-raised-button [disabled]="!canSynthesize"
-          color="primary" (click)="synthesize()">Skaityti</button>
+          color="primary" (click)="synthesize()">Sukurti</button>
         <div class="result-container" *ngIf="sending">
           <mat-progress-spinner id="synthesisSpinner" class="upload-spinner" color="primary" mode="indeterminate"
             diameter="35">

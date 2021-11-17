@@ -42,7 +42,7 @@ export class SynthesisComponent implements OnInit {
   isTesting: boolean;
   requestID: string;
   textFormat: string;
-  speed: number;
+  speedInt: number;
 
   debugMode: boolean;
   debugClick: number;
@@ -235,6 +235,15 @@ export class SynthesisComponent implements OnInit {
     this.textModifiedInternal = value;
   }
 
+  get speed(): number {
+    return this.speedInt;
+  }
+
+  set speed(value: number) {
+    this.speedInt = value;
+    this.clearPlayer();
+  }
+
   clearPlayer(): void {
     const audio = document.getElementById('player') as HTMLAudioElement;
     if (audio) {
@@ -253,6 +262,7 @@ export class SynthesisComponent implements OnInit {
   set model(model: Model) {
     this.params.setModelID(model?.id);
     this.modelVar = model;
+    this.clearPlayer();
   }
 
   showError(msg: string, error: any) {
@@ -279,7 +289,6 @@ export class SynthesisComponent implements OnInit {
     } else {
       r = 1 - (v - 100) / 200;
     }
-    console.log(v, r);
     return r;
   }
 
@@ -288,7 +297,6 @@ export class SynthesisComponent implements OnInit {
     if (v < 100) {
       r = 50 + (v / 2);
     }
-    console.log(v, r);
     return r + '%';
   }
 
