@@ -64,6 +64,16 @@ describe('UnexpectedErrorService', () => {
   it('text differs', () => {
     expect(service.getErrorMsg('Original text does not match the modified')).toEqual('Pakoreguotas tekstas skiriasi nuo originalaus');
   });
+
+  it('no text', () => {
+    expect(service.getErrorMsg('No text')).toEqual('Neįvestas tekstas');
+  });
+
+  it('too long', () => {
+    expect(service.getErrorMsg('Text too long: passed 652 chars, max allowed 200'))
+    .toEqual('Per ilgas tekstas (652 simb.). Jums leidžiama įvesti 200 simbolių');
+  });
+
   it('text HttpErrorResponse', () => {
     expect(service.getErrorMsg(new HttpErrorResponse({ status: 403 }))).toEqual('Oi, nesiseka skaityti, pabandykit dar kartą');
   });

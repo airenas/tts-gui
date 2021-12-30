@@ -25,6 +25,17 @@ export class UnexpectedErrorService {
       if ((error || '').startsWith('Bad accents:')) {
         return 'Blogas kirtis: ' + error.substr('Bad accents: '.length);
       }
+      if (error === 'No text') {
+        return 'Neįvestas tekstas';
+      }
+      if ((error || '').startsWith('Text too long: passed')) {
+        const words = error.split(' ');
+        if (words.length === 9) {
+          const sLen = words[4];
+          const sMax = words[8];
+          return `Per ilgas tekstas (${sLen} simb.). Jums leidžiama įvesti ${sMax} simbolių`;
+        }
+      }
     }
     this.count++;
     console.log('err count = ', this.count);

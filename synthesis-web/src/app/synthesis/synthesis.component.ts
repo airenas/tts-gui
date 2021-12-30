@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { Model } from '../api/model';
 import { SynthesisResult } from '../api/synthesis-result';
-import { ErrorService } from '../service/error.service';
 import { ModelsService } from '../service/models.service';
 import { SayingService } from '../service/saying.service';
 import { SynthesisService } from '../service/synthesis.service';
@@ -15,7 +14,7 @@ import { UnexpectedErrorService } from './../service/unexpected-error.service';
   selector: 'app-synthesis',
   templateUrl: './synthesis.component.html',
   styleUrls: ['./synthesis.component.scss'],
-  providers: [UnexpectedErrorService, ErrorService],
+  providers: [UnexpectedErrorService],
 })
 export class SynthesisComponent implements OnInit {
   // tslint:disable-next-line: no-input-rename
@@ -49,7 +48,6 @@ export class SynthesisComponent implements OnInit {
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
-    protected errorService: ErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
     protected modelsService: ModelsService, protected snackBar: MatSnackBar, protected config: Config) {
     this.isFirefox = params.isFirefox();
@@ -135,9 +133,7 @@ export class SynthesisComponent implements OnInit {
   }
 
   onResult(result: SynthesisResult): void {
-    if (result.validationFailItems && result.validationFailItems.length > 0) {
-      this.errorText = this.errorService.getErrorMsg(result.validationFailItems[0]);
-    } else if (result.error && result.error !== '') {
+    if (result.error && result.error !== '') {
       this.errorText = this.uErrorService.getErrorMsg(result.error);
     } else if (result.message && result.message !== '') {
       this.errorText = this.uErrorService.getErrorMsg(result.message);
@@ -156,9 +152,7 @@ export class SynthesisComponent implements OnInit {
 
   onResultModified(result: SynthesisResult): void {
     console.log('on result');
-    if (result.validationFailItems && result.validationFailItems.length > 0) {
-      this.errorTextModified = this.errorService.getErrorMsg(result.validationFailItems[0]);
-    } else if (result.error && result.error !== '') {
+    if (result.error && result.error !== '') {
       this.errorTextModified = this.uErrorService.getErrorMsg(result.error);
     } else if (result.message && result.message !== '') {
       this.errorTextModified = this.uErrorService.getErrorMsg(result.message);

@@ -1,4 +1,3 @@
-import { ValidateFailItem } from './../api/synthesis-result';
 import { TestBed } from '@angular/core/testing';
 
 import { SynthesisService, HttpSynthesisService } from './synthesis.service';
@@ -24,11 +23,11 @@ describe('Handle error', () => {
   it('handle 400', (done) => {
     const err = new HttpErrorResponse({
       status: 400,
-      error: { validationFailItems: [{ check: { id: 'olia' } }] }
+      error: { message: 'No text' }
     });
     HttpSynthesisService.handleError(err).subscribe(
       result => {
-        expect(result.validationFailItems[0].check.id).toEqual('olia');
+        expect(result.message).toEqual('No text');
         done();
       },
       () => {
