@@ -1,14 +1,14 @@
-import { MockModelsService, MockSayingService } from './../base/test.app.module';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { SynthesisComponent } from './synthesis.component';
-import { TestAppModule, TestHelper } from '../base/test.app.module';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { Model } from '../api/model';
+import { TestAppModule, TestHelper } from '../base/test.app.module';
+import { ModelsService } from '../service/models.service';
 import { LocalStorageParamsProviderService, ParamsProviderService } from '../service/params-provider.service';
 import { SayingService } from '../service/saying.service';
-import { of } from 'rxjs';
-import { ModelsService } from '../service/models.service';
-import { Model } from '../api/model';
+import { MockModelsService, MockSayingService } from './../base/test.app.module';
+import { SynthesisComponent } from './synthesis.component';
+
 
 describe('SynthesisComponent', () => {
   let component: SynthesisComponent;
@@ -307,6 +307,35 @@ describe('SynthesisComponent', () => {
     fixture.debugElement.query(By.css('#precizeSynthText')).nativeElement.click();
     expect(component.debugClick).toBe(1);
   }));
+
+  it('should have UseKey placeholder', waitForAsync(() => {
+    expect(fixture.debugElement.query(By.css('#userKey'))
+      .nativeElement.getAttribute('placeholder')).toContain('Naudotojo kodas (būtinas ');
+  }));
+
+  it('should change UseKey placeholder', waitForAsync(() => {
+    component.userKey = 'olia';
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('#userKey'))
+        .nativeElement.getAttribute('placeholder')).toBe('Naudotojo kodas');
+    });
+  }));
+
+  it('should have password type for UseKey', waitForAsync(() => {
+    expect(fixture.debugElement.query(By.css('#userKey'))
+      .nativeElement.getAttribute('type')).toBe('password');
+  }));
+
+  it('should change password type for UseKey', waitForAsync(() => {
+    component.showKey();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('#userKey'))
+        .nativeElement.getAttribute('type')).toBe('text');
+    });
+  }));
+
 });
 
 function testLoadModel(paramModelID: string, models: Model[], expectedID: string) {
