@@ -310,7 +310,7 @@ describe('SynthesisComponent', () => {
 
   it('should have UseKey placeholder', waitForAsync(() => {
     expect(fixture.debugElement.query(By.css('#userKey'))
-      .nativeElement.getAttribute('placeholder')).toContain('Naudotojo kodas (būtinas ');
+      .nativeElement.getAttribute('data-placeholder')).toContain('Naudotojo kodas (būtinas ');
   }));
 
   it('should change UseKey placeholder', waitForAsync(() => {
@@ -318,7 +318,7 @@ describe('SynthesisComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(fixture.debugElement.query(By.css('#userKey'))
-        .nativeElement.getAttribute('placeholder')).toBe('Naudotojo kodas');
+        .nativeElement.getAttribute('data-placeholder')).toBe('Naudotojo kodas');
     });
   }));
 
