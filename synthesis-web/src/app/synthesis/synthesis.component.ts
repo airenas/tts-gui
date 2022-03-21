@@ -44,6 +44,10 @@ export class SynthesisComponent implements OnInit {
   debugMode: boolean;
   debugClick: number;
 
+  userKeyPlaceHolder: string;
+  keyType: string;
+  private _userKey: string;
+
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
     protected sayingService: SayingService, protected params: ParamsProviderService,
@@ -71,6 +75,13 @@ export class SynthesisComponent implements OnInit {
       this.text = this.params.text;
     }
     this.initModels();
+    this.initParams();
+  }
+
+  initParams() {
+    this.hideKey();
+    this._userKey = this.params.getUserKey();
+    this.updateUserkeyPlaceHolder(this._userKey);
   }
 
   synthesize() {
@@ -292,5 +303,27 @@ export class SynthesisComponent implements OnInit {
 
   conditionClick() {
     this.conditionChecked = !this.conditionChecked;
+  }
+
+  get userKey(): string {
+    return this._userKey;
+  }
+
+  set userKey(userKey: string) {
+    this._userKey = userKey;
+    this.updateUserkeyPlaceHolder(this._userKey);
+    this.params.setUserKey(this._userKey);
+  }
+
+  updateUserkeyPlaceHolder(_userKey: string) {
+    this.userKeyPlaceHolder = (_userKey ?? '') === '' ? 'Naudotojo kodas (būtinas tik registruotam naudotojui)' : 'Naudotojo kodas';
+  }
+
+  showKey() {
+    this.keyType = 'text';
+  }
+
+  hideKey() {
+    this.keyType = 'password';
   }
 }

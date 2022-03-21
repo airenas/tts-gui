@@ -6,6 +6,8 @@ export abstract class ParamsProviderService {
   abstract setModelID(id: string): void;
   abstract getModelID(): string;
   abstract isFirefox(): boolean;
+  abstract setUserKey(key: string): void;
+  abstract getUserKey(): string;
 }
 
 @Injectable()
@@ -13,6 +15,7 @@ export class LocalStorageParamsProviderService implements ParamsProviderService 
   text: string;
   modelIDLocal: string;
   isFirefoxInt?: boolean = undefined;
+  userkey: string;
 
   constructor() { }
 
@@ -35,5 +38,13 @@ export class LocalStorageParamsProviderService implements ParamsProviderService 
       this.modelIDLocal = localStorage.getItem('modelID');
     }
     return this.modelIDLocal;
+  }
+
+  setUserKey(key: string): void {
+    this.userkey = key;
+  }
+
+  getUserKey(): string {
+    return this.userkey;
   }
 }

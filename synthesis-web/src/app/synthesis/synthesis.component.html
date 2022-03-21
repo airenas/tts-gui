@@ -1,6 +1,25 @@
 <mat-card>
   <mat-card-content>
     <div class="full-width">
+
+      <div class="key-container">
+        <form id="loginform" class="login-form" action="" method="post" autocomplete="on">
+          <div class="key-container">
+            <mat-form-field class="key-control">
+              <input id="userKey" name="password" matInput [(ngModel)]="userKey" [placeholder]="userKeyPlaceHolder"
+                [type]="keyType" matTooltip="Naudotojo kodas (būtinas tik registruotam naudotojui)"
+                autocomplete="password">
+            </mat-form-field>
+            <button *ngIf="keyType === 'password'" class="key-button" mat-button (click)="showKey()">
+              <i class="material-icons">visibility_off</i>
+            </button>
+            <button *ngIf="keyType !== 'password'" class="key-button" mat-button (click)="hideKey()">
+              <i class="material-icons">visibility</i>
+            </button>
+          </div>
+        </form>
+      </div>
+
       <div class="text-control">
         <mat-form-field class="full-width">
           <textarea class="text" id="textInput" matInput placeholder="Tekstas" [(ngModel)]="text"
@@ -45,7 +64,8 @@
 
       <div class="controls-container">
         <mat-checkbox class="condition-check" color="primary" [(ngModel)]="conditionAllowCollect"></mat-checkbox>
-        <p class="condition-text" id="precizeSynthText" (click)="debugModeClick()">Įgalinti preciziškos sintezės funkciją</p>
+        <p class="condition-text" id="precizeSynthText" (click)="debugModeClick()">Įgalinti preciziškos sintezės
+          funkciją</p>
       </div>
 
       <div class="result-controls-container">
