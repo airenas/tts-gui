@@ -20,8 +20,6 @@ export class SynthesisComponent implements OnInit {
   // tslint:disable-next-line: no-input-rename
   @Input('service-url') serviceUrl: string;
   // tslint:disable-next-line: no-input-rename
-  @Input('partnership-url') partnershipURL: string;
-  // tslint:disable-next-line: no-input-rename
   @Input('models-url') modelsUrl: string;
   sending = false;
   sendingModified = false;
@@ -73,7 +71,6 @@ export class SynthesisComponent implements OnInit {
       this.text = this.params.text;
     }
     this.initModels();
-    console.log('Partnerystės URL: ' + this.partnershipURL);
   }
 
   synthesize() {
@@ -151,7 +148,6 @@ export class SynthesisComponent implements OnInit {
   }
 
   onResultModified(result: SynthesisResult): void {
-    console.log('on result');
     if (result.error && result.error !== '') {
       this.errorTextModified = this.uErrorService.getErrorMsg(result.error);
     } else if (result.message && result.message !== '') {
