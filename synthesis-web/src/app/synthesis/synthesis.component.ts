@@ -46,7 +46,7 @@ export class SynthesisComponent implements OnInit {
 
   userKeyPlaceHolder: string;
   keyType: string;
-  private _userKey: string;
+  private userKeyInternal: string;
 
   constructor(
     protected synthesisService: SynthesisService, protected uErrorService: UnexpectedErrorService,
@@ -80,8 +80,8 @@ export class SynthesisComponent implements OnInit {
 
   initParams() {
     this.hideKey();
-    this._userKey = this.params.getUserKey();
-    this.updateUserkeyPlaceHolder(this._userKey);
+    this.userKeyInternal = this.params.getUserKey();
+    this.updateUserkeyPlaceHolder(this.userKeyInternal);
   }
 
   synthesize() {
@@ -90,9 +90,9 @@ export class SynthesisComponent implements OnInit {
 
     this.synthesisService.synthesize({
       text: this.text, model: this.model.url, allowCollect: this.conditionAllowCollect,
-      textFormat: this.textFormat, speed: this.calcSpeedValue(this.speed), 
+      textFormat: this.textFormat, speed: this.calcSpeedValue(this.speed),
       voice: this.model.voice,
-      key: this._userKey ?? ''
+      key: this.userKeyInternal ?? ''
     })
       .subscribe(
         result => {
@@ -112,12 +112,12 @@ export class SynthesisComponent implements OnInit {
     this.errorTextModified = '';
 
     this.synthesisService.synthesizeCustom({
-      text: this.textModified, 
-      model: this.model.url, 
-      request: this.requestID, 
+      text: this.textModified,
+      model: this.model.url,
+      request: this.requestID,
       speed: this.calcSpeedValue(this.speed),
       voice: this.model.voice,
-      key: this._userKey ?? ''
+      key: this.userKeyInternal ?? ''
     })
       .subscribe(
         result => {
@@ -315,17 +315,17 @@ export class SynthesisComponent implements OnInit {
   }
 
   get userKey(): string {
-    return this._userKey;
+    return this.userKeyInternal;
   }
 
   set userKey(userKey: string) {
-    this._userKey = userKey;
-    this.updateUserkeyPlaceHolder(this._userKey);
-    this.params.setUserKey(this._userKey);
+    this.userKeyInternal = userKey;
+    this.updateUserkeyPlaceHolder(this.userKeyInternal);
+    this.params.setUserKey(this.userKeyInternal);
   }
 
-  updateUserkeyPlaceHolder(_userKey: string) {
-    this.userKeyPlaceHolder = (_userKey ?? '') === '' ? 'Naudotojo kodas (būtinas tik registruotam naudotojui)' : 'Naudotojo kodas';
+  updateUserkeyPlaceHolder(userKey: string) {
+    this.userKeyPlaceHolder = (userKey ?? '') === '' ? 'Naudotojo kodas (būtinas tik registruotam naudotojui)' : 'Naudotojo kodas';
   }
 
   showKey() {

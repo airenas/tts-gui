@@ -43,6 +43,15 @@ export class HttpSynthesisService implements SynthesisService {
     return model;
   }
 
+  static makeHeaders(key: string | null): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    if (key !== '') {
+      headers = headers.append('Authorization', 'Key ' + encodeURI(key));
+    }
+    return headers;
+  }
+
   constructor(public http: HttpClient, private config: Config) {
   }
 
@@ -74,15 +83,6 @@ export class HttpSynthesisService implements SynthesisService {
         return res as SynthesisResult;
       })
       .catch(e => HttpSynthesisService.handleError(e));
-  }
-
-  static makeHeaders(key: string | null): HttpHeaders {
-    let headers = new HttpHeaders();
-    headers = headers.append('Accept', 'application/json');
-    if (key !== '') {
-      headers = headers.append('Authorization', 'Key ' + encodeURI(key));
-    }
-    return headers
   }
 }
 
