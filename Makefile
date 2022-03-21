@@ -1,16 +1,16 @@
 -include Makefile.options
+-include version
 #####################################################################################
 dist_dir=$(CURDIR)/deploy
 port?=8000
 main_dir=synthesis-web
-commit_count=$(shell git rev-list --count HEAD)
-SYNTHESIS_WEB_COMPONENT_VERSION?=0.3
-version=$(SYNTHESIS_WEB_COMPONENT_VERSION).$(commit_count)
 #####################################################################################
 init: 
 	cd $(main_dir) && npm ci
-test: 
+test/unit: 
 	cd $(main_dir) && ng test
+test/lint: 
+	cd $(main_dir) && npm run lint
 #####################################################################################
 $(dist_dir):
 	mkdir -p $(dist_dir)

@@ -1,11 +1,10 @@
 -include ../Makefile.options
+-include ../../version
 #####################################################################################
 dist_dir=$(CURDIR)/deploy
 main_dir=../../
 source_dir=../../deploy/html
 service=tts-gui
-version=0.2
-commit_count=$(shell git rev-list --count HEAD)
 #####################################################################################
 $(dist_dir):
 	mkdir -p $@
@@ -20,10 +19,10 @@ $(dist_dir)/.build: | $(dist_dir)/html
 
 build: $(dist_dir)/.build
 ########### DOCKER ##################################################################
-tag=airenas/$(service):$(version).$(commit_count)
+tag=airenas/$(service):$(version)
 
 dbuild: build
-	docker build -t $(tag) --build-arg BUILD_VERSION=$(version).$(commit_count) ./
+	docker build -t $(tag) --build-arg BUILD_VERSION=$(version) ./
 
 dpush: dbuild
 	docker push $(tag)
