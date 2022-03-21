@@ -47,12 +47,8 @@ export class HttpSynthesisService implements SynthesisService {
   }
 
   synthesize(params: SynthParams): Observable<SynthesisResult> {
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
     const httpOptions = {
-      headers: new HttpHeaders({
-        Accept: 'application/json'
-      })
+      headers: HttpSynthesisService.makeHeaders(params.key)
     };
     return this.http.post(this.config.synthesisURL + params.model,
       {
@@ -67,12 +63,8 @@ export class HttpSynthesisService implements SynthesisService {
   }
 
   synthesizeCustom(params: SynthParams): Observable<SynthesisResult> {
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
     const httpOptions = {
-      headers: new HttpHeaders({
-        Accept: 'application/json'
-      }),
+      headers: HttpSynthesisService.makeHeaders(params.key),
       params: { requestID: params.request }
     };
     const modelCustom = HttpSynthesisService.changeEndpoint(params.model);
@@ -82,6 +74,15 @@ export class HttpSynthesisService implements SynthesisService {
         return res as SynthesisResult;
       })
       .catch(e => HttpSynthesisService.handleError(e));
+  }
+
+  static makeHeaders(key: string | null): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+    if (key !== '') {
+      headers = headers.append('Authorization', 'Key ' + encodeURI(key));
+    }
+    return headers
   }
 }
 
@@ -93,4 +94,5 @@ export interface SynthParams {
   textFormat?: string;
   request?: string;
   speed?: number;
+  key?: string;
 }

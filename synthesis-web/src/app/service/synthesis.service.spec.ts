@@ -89,3 +89,20 @@ describe('Change endpoint', () => {
     expect(HttpSynthesisService.changeEndpoint('')).toEqual('');
   });
 });
+
+describe('make headers', () => {
+  it('should make no key header', () => {
+    const got = HttpSynthesisService.makeHeaders('') 
+    expect(got.get('Accept')).toEqual('application/json');
+    expect(got.get('Authorization')).toBeNull();
+  });
+  it('should add key header', () => {
+    const got = HttpSynthesisService.makeHeaders('olia') 
+    expect(got.get('Accept')).toEqual('application/json');
+    expect(got.get('Authorization')).toEqual('Key olia');
+  });
+  it('should encode in ascii', () => {
+    const got = HttpSynthesisService.makeHeaders('oliašš') 
+    expect(got.get('Authorization')).toEqual('Key olia%C5%A1%C5%A1');
+  });
+});
