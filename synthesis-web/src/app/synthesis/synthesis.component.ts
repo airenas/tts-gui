@@ -255,6 +255,10 @@ export class SynthesisComponent implements OnInit {
     if (audio) {
       audio.src = '';
     }
+    const audioModified = document.getElementById('playerModified') as HTMLAudioElement;
+    if (audioModified) {
+      audioModified.src = '';
+    }
   }
 
   clickModel(model: Model) {
