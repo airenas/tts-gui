@@ -48,7 +48,9 @@ tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/t
 dbuild:
 	cd build/docker && $(MAKE) clean dbuild
 dpush:
-	cd build/docker && $(MAKE) dpush	
+	cd build/docker && $(MAKE) dpush
+dscan:
+	cd build/docker && $(MAKE) dscan			
 #####################################################################################
 put-component:
 	scp tts-component-$(version).tar.gz $(component-share)

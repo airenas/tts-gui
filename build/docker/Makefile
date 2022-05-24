@@ -26,6 +26,8 @@ dbuild: build
 
 dpush: dbuild
 	docker push $(tag)
+dscan: dbuild	
+	docker scan --accept-license $(tag)
 ########### END #####################################################################
 clean:
 	cd $(main_dir) && $(MAKE) clean
