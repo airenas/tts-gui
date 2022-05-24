@@ -36,6 +36,21 @@ export class UnexpectedErrorService {
           return `Per ilgas tekstas (${sLen} simb.). Jums leidžiama įvesti ${sMax} simbolių`;
         }
       }
+      if ((error || '').startsWith('ssml:')) {
+        let err = error.substring(5).trim();
+        const index = err.indexOf(':');
+        let posStr = '';
+        if (index > 0) {
+          const txt = err.substring(0, index);
+          const pos = parseInt(txt, 10);
+          if (!isNaN(pos)) {
+            posStr = ' (pozicija ' + pos + ')';
+            err = err.substring(index + 1).trim();
+            err = this.ssmlToLt(err);
+          }
+        }
+        return 'SSML klaida' + posStr + ': ' + err;
+      }
     }
     this.count++;
     console.log('err count = ', this.count);
@@ -51,4 +66,16 @@ export class UnexpectedErrorService {
   public clear(): void {
     this.count = 0;
   }
+
+  ssmlToLt(err: string): string {
+    let res = err.replace(/^no /, 'nenurodyta ');
+    res = res.replace(/^unknown tag /, 'nežinoma žyma ');
+    res = res.replace(/^wrong /, 'blogas ');
+    res = res.replace(/^data after /, 'duomenys po ');
+    res = res.replace(/^unknown voice /, 'nežinomas diktorius ');
+    res = res.replace(/^data in /, 'duomenys žymoje ');
+    return res;
+  }
 }
+
+

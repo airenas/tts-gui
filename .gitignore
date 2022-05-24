@@ -3,3 +3,4 @@ Makefile.options
 deploy/**
 tts-component-0.**.tar.gz
 build/docker/deploy/**
+.vscode/**

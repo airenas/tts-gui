@@ -1,5 +1,5 @@
 const srv="http://192.168.1.83:8010/";
-const srv1="https://sinteze.intelektika.lt/";
+const srv1="https://sinteze-test.intelektika.lt/";
 
 const PROXY_CONFIG = {
   "/synthesis.service/": {

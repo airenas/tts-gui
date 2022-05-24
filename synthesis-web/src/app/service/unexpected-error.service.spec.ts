@@ -77,4 +77,17 @@ describe('UnexpectedErrorService', () => {
   it('text HttpErrorResponse', () => {
     expect(service.getErrorMsg(new HttpErrorResponse({ status: 403 }))).toEqual('Oi, nesiseka skaityti, pabandykit dar kartą');
   });
+
+  it('SSML', () => {
+    expect(service.getErrorMsg('ssml: 20: unknown tag <pp>')).toEqual('SSML klaida (pozicija 20): nežinoma žyma <pp>');
+  });
+
+  it('ssmlToLt', () => {
+    expect(service.ssmlToLt('unknown tag <pp>')).toEqual('nežinoma žyma <pp>');
+    expect(service.ssmlToLt('unknown voice aa')).toEqual('nežinomas diktorius aa');
+    expect(service.ssmlToLt('no <voice>:name')).toEqual('nenurodyta <voice>:name');
+    expect(service.ssmlToLt('no <prosody>:rate')).toEqual('nenurodyta <prosody>:rate');
+    expect(service.ssmlToLt('data after </speak>')).toEqual('duomenys po </speak>');
+    expect(service.ssmlToLt('data in <break>')).toEqual('duomenys žymoje <break>');
+  });
 });
