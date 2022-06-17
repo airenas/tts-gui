@@ -60,6 +60,9 @@ describe('UnexpectedErrorService', () => {
     expect(service.getErrorMsg('Bad accents: [olia, aaa]')).toEqual('Blogas kirtis: [olia, aaa]');
     expect(service.getErrorMsg('Bad accents: [o{l~}ia]')).toEqual('Blogas kirtis: [o{l~}ia]');
   });
+  it('bad symbols', () => {
+    expect(service.getErrorMsg('Wrong symbols: `olia`')).toEqual('Blogi simboliai: `olia`');
+  });
 
   it('text differs', () => {
     expect(service.getErrorMsg('Original text does not match the modified')).toEqual('Pakoreguotas tekstas skiriasi nuo originalaus');

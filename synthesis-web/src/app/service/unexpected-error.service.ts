@@ -23,7 +23,10 @@ export class UnexpectedErrorService {
         return 'Pakoreguotas tekstas skiriasi nuo originalaus';
       }
       if ((error || '').startsWith('Bad accents:')) {
-        return 'Blogas kirtis: ' + error.substr('Bad accents: '.length);
+        return 'Blogas kirtis:' + error.substring('Bad accents:'.length);
+      }
+      if ((error || '').startsWith('Wrong symbols:')) {
+        return 'Blogi simboliai:' + error.substring('Wrong symbols:'.length);
       }
       if (error === 'No text') {
         return 'Neįvestas tekstas';
