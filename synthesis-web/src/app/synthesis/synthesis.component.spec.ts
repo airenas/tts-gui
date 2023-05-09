@@ -8,6 +8,8 @@ import { LocalStorageParamsProviderService, ParamsProviderService } from '../ser
 import { SayingService } from '../service/saying.service';
 import { MockModelsService, MockSayingService } from './../base/test.app.module';
 import { SynthesisComponent } from './synthesis.component';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 
 describe('SynthesisComponent', () => {
@@ -430,3 +432,35 @@ describe('Synthesis load', () => {
     });
   }));
 });
+
+describe('Test input', () => {
+  let component: SynthesisComponent;
+  let fixture: ComponentFixture<TestComponentWrapper>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [TestComponentWrapper, SynthesisComponent, AppComponent],
+      imports: [TestAppModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(TestComponentWrapper);
+    component = fixture.debugElement.children[0].componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should take text', () => {
+    expect(component).toBeTruthy();
+    fixture.whenStable().then(() => {
+      expect(component.text).toBe("Olia, olia!");
+    });
+  });
+});
+
+@Component({
+  selector: 'test-component-wrapper',
+  template: '<app-synthesis service-url="" partnership-url="" text="Olia, olia!"></app-synthesis>'
+})
+class TestComponentWrapper {
+}
