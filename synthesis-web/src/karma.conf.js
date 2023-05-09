@@ -27,6 +27,12 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+    proxies: {
+      '/assets/': '/base/assets/'
+    },
+    files:[
+      { pattern: './assets/**', watched: false, included:false, nocache:false, served:true }
+    ],
   });
 };
