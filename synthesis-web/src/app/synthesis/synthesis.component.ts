@@ -21,6 +21,7 @@ export class SynthesisComponent implements OnInit {
   @Input('service-url') serviceUrl: string;
   // tslint:disable-next-line: no-input-rename
   @Input('models-url') modelsUrl: string;
+  // tslint:disable-next-line: no-input-rename
   @Input('text') userText: string;
   sending = false;
   sendingModified = false;
