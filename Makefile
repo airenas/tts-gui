@@ -26,8 +26,8 @@ $(dist_dir)/.build: $(main_dir) $(main_dir)/src $(main_dir)/src/environments/env
 
 build: updateVersion $(dist_dir)/.build
 #####################################################################################
-serve-deployed:
-	docker run -p $(port):80 -v $(dist_dir)/html:/usr/share/nginx/html nginx:1.17.9
+serve/dockerized:
+	docker run -it --rm -p $(port):8000 airenas/tts-gui:$(version)
 #####################################################################################
 files=main-es5.js main-es2015.js polyfills-es5.js polyfills-es2015.js runtime-es5.js runtime-es2015.js \
 	3rdpartylicenses.txt styles.css info
