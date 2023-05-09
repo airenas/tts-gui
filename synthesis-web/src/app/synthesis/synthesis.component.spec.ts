@@ -435,17 +435,17 @@ describe('Synthesis load', () => {
 
 describe('Test input', () => {
   let component: SynthesisComponent;
-  let fixture: ComponentFixture<TestComponentWrapper>;
+  let fixture: ComponentFixture<TestWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TestComponentWrapper, SynthesisComponent, AppComponent],
+      declarations: [TestWrapperComponent, SynthesisComponent, AppComponent],
       imports: [TestAppModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TestComponentWrapper);
+    fixture = TestBed.createComponent(TestWrapperComponent);
     component = fixture.debugElement.children[0].componentInstance;
     fixture.detectChanges();
   });
@@ -453,14 +453,14 @@ describe('Test input', () => {
   it('should take text', () => {
     expect(component).toBeTruthy();
     fixture.whenStable().then(() => {
-      expect(component.text).toBe("Olia, olia!");
+      expect(component.text).toBe('Olia, olia!');
     });
   });
 });
 
 @Component({
-  selector: 'test-component-wrapper',
+  selector: 'app-test-component-wrapper',
   template: '<app-synthesis service-url="" partnership-url="" text="Olia, olia!"></app-synthesis>'
 })
-class TestComponentWrapper {
+class TestWrapperComponent {
 }
