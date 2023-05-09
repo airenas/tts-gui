@@ -46,7 +46,7 @@ tts-component-$(version).tar.gz: $(tts_files) $(dist_dir)/.build | $(dist_dir)/t
 	tar -czf $@ -C $(dist_dir) tts
 #####################################################################################
 dbuild:
-	cd build/docker && $(MAKE) clean dbuild
+	cd build/docker && $(MAKE) dbuild
 dpush:
 	cd build/docker && $(MAKE) dpush
 dscan:
